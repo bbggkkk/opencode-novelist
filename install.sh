@@ -88,7 +88,7 @@ if [[ "$RUNNING_FROM_REPO" == "true" && -d "$SCRIPT_DIR/agents" ]]; then
     cp "$SCRIPT_DIR/agents"/*.md "$TARGET/"
 else
     # Download from GitHub
-    for agent in 소설가 소설가-작성가 소설가-편집자 소설가-연구자 작사가 작사가-작성가 작사가-편집자; do
+    for agent in 소설가 소설가-작성가 소설가-편집자 소설가-연구자 소설가-설정지킴이 소설가-오타쿠 작사가 작사가-작성가 작사가-편집자; do
         curl -sSL "$REPO_URL/agents/${agent}.md" -o "$TARGET/${agent}.md"
     done
 fi
@@ -103,10 +103,12 @@ echo ""
 echo " 사용 가능한 에이전트:"
 echo ""
 echo "  [소설가 시스템]"
-echo "   /소설가         - 라우터 (창작/편집/연구 자동 연결)"
-echo "   /소설가-작성가   - 소설 창작"
-echo "   /소설가-편집자   - 소설 편집/피드백"
-echo "   /소설가-연구자   - 연구/LaTeX 논문"
+echo "   /소설가              - 라우터 (피드백 루프 오케스트레이션)"
+echo "   /소설가-작성가        - 소설 창작"
+echo "   /소설가-편집자        - 소설 편집/피드백"
+echo "   /소설가-연구자        - 연구/LaTeX 논문"
+echo "   /소설가-설정지킴이    - 설정 정보 수집/정리"
+echo "   /소설가-오타쿠        - 설정 일관성 검증"
 echo ""
 echo "  [작사가 시스템]"
 echo "   /작사가         - 라우터 (창작/편집 자동 연결)"
