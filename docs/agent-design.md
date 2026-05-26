@@ -116,7 +116,27 @@ curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-agent-pack/master/i
 Manual copy is also supported:
 
 ```bash
-cp agents/*.md ~/.config/opencode/agents/
+cp -r agents/* ~/.config/opencode/agents/
 ```
 
 After installation, restart opencode for changes to take effect.
+
+## Skill Mapping
+
+Each agent is paired with specific opencode skills that enhance its capabilities.
+
+| Skill | Used By | Purpose |
+|-------|---------|---------|
+| `brainstorming` | novelist-writer, novelist-editor, lyricist-writer | Creative exploration before drafting or revision |
+| `writing-plans` | novelist-writer | Multi-step plan generation for episode outlines |
+| `brainstorming-research-ideas` | novelist-researcher | Ideation for new research directions |
+| `dispatching-parallel-agents` | novelist, lyricist | Parallel execution of independent sub-agent calls |
+| `executing-plans` | novelist, lyricist | Structured execution of multi-step plans |
+| `setting-collapse-detector` | novelist-loremaster, novelist-otaku | Systematic setting consistency verification |
+
+### Skill Invocation
+
+- **setting-collapse-detector** is invoked automatically by `@novelist-otaku` on every draft verification, and by `@novelist-loremaster` after collecting setting info to check for internal contradictions.
+- **brainstorming** is invoked by writer/editor agents when the brief is open-ended or when multiple creative approaches need exploration.
+- **dispatching-parallel-agents** is used by routers when multiple independent sub-agent tasks can run simultaneously.
+- All agents with skill access declare `skill: allow` in their YAML permission block to enable skill invocation.

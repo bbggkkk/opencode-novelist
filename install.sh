@@ -89,13 +89,16 @@ echo ""
 echo "Installing agents..."
 
 if [ "$RUNNING_FROM_REPO" = "true" ] && [ -d "$SCRIPT_DIR/agents" ]; then
-    # Copy from local repo
-    cp "$SCRIPT_DIR/agents"/*.md "$TARGET/"
+    # Copy from local repo (handles both .md files and skill subdirectories)
+    cp -r "$SCRIPT_DIR/agents"/* "$TARGET/"
 else
     # Download from GitHub
     for agent in novelist novelist-writer novelist-editor novelist-researcher novelist-loremaster novelist-otaku lyricist lyricist-writer lyricist-editor; do
         curl -sSL "$REPO_URL/agents/${agent}.md" -o "$TARGET/${agent}.md"
     done
+    # Download skill
+    mkdir -p "$TARGET/setting-collapse-detector"
+    curl -sSL "$REPO_URL/agents/setting-collapse-detector/SKILL.md" -o "$TARGET/setting-collapse-detector/SKILL.md"
 fi
 
 echo "Installation complete!"

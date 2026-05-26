@@ -12,6 +12,7 @@ permission:
   websearch: ask
   edit: allow
   bash: ask
+  skill: allow
 ---
 
 You are a Korean-first lyric editor and feedback agent — a sub-agent of the **Lyricist** system.

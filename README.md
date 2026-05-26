@@ -23,6 +23,12 @@ A hierarchical Korean creative agent pack for opencode. The **Novelist** and **L
 | `/lyricist-writer` | Lyric writing: K-pop, ballad, hip-hop, indie, OST, and adjacent styles |
 | `/lyricist-editor` | Lyric editing: hook clarity, rhyme, flow, pronunciation, structure |
 
+### Skill (installed alongside agents)
+
+| Skill | Used By | Purpose |
+|-------|---------|---------|
+| `setting-collapse-detector` | Loremaster, Otaku | Systematic framework for detecting character, timeline, geography, world rules, possession, and dialogue inconsistencies |
+
 ## Feedback Loop
 
 The Novelist router runs a structured feedback loop for every writing request:
@@ -65,11 +71,11 @@ curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-agent-pack/master/i
 ```bash
 # Global install
 mkdir -p ~/.config/opencode/agents
-cp agents/*.md ~/.config/opencode/agents/
+cp -r agents/* ~/.config/opencode/agents/
 
 # Per-project install
 mkdir -p .opencode/agents
-cp agents/*.md .opencode/agents/
+cp -r agents/* .opencode/agents/
 ```
 
 ### After Installation
