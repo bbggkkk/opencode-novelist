@@ -39,18 +39,17 @@ Your job is to cross-examine *only* the **Draft of Next Beat** for absolute cons
 
 | Category | What to check in the Next Beat Draft | Reference Sources |
 |----------|--------------------------------------|-------------------|
-| **Prefix Transition** | Does it connect seamlessly and naturally to the end of the Accumulated Verified Text? | End of Accumulated Verified Text |
+| **Prefix Transition** | Verify there are no duplicate sentences, missing action jumps, or direct contradictions in the immediate continuation from the end of the Accumulated Verified Text. | End of Accumulated Verified Text |
 | **Character** | Name spelling, appearance, personality, abilities, relationships, backstory | Setting doc & Accumulated Verified Text |
 | **Character Evolution** | Does it strictly adhere to the designated character status modifications (age shifts, injuries, emotional trauma, or relationship flags) defined in the active volume's Character Evolution Log in the Series Bible? | `[Active Work Path]series-bible.md` |
 | **Location** | Geography, atmosphere, distance, established details | Setting doc & Accumulated Verified Text |
 | **Timeline** | Sequence of events, elapsed time, season, character ages | Accumulated Verified Text |
 | **Magic/System** | Rules, limitations, costs, known exceptions | Setting doc & Accumulated Verified Text |
-| **Dialogue** | Speech patterns, knowledge consistency, 반말/존댓말 alignment | Accumulated Verified Text |
+| **Dialogue** | **Fact & Lore Consistency**: Verify that the content of the dialogue does not violate character knowledge (e.g. character does not reveal information they don't know, nor refers to events that never happened). *Note: Speech style (어투) and tone are verified by the Editor.* | Setting doc & Accumulated Verified Text |
 | **Physical** | Injuries, items carried, clothing state carried over | Accumulated Verified Text |
 | **Logic** | Cause and effect, character motivation, consistency with the Scene Outline | Accumulated Verified Text & Scene Outline |
 | **Plot Thread Progress** | Does it incorporate, foreshadow, or advance the active plot threads designated for this volume in the Series Bible? | `[Active Work Path]series-bible.md` |
-| **Creative Profile** | Tone consistency, style alignment, language & cultural context | Creative Profile |
-| **Web Novel Formatting** | **Strict Layout Rules**: Verify there are no space indents at the start of paragraphs. Verify paragraphs are separated strictly by a standard blank line (`\n\n`). Verify dialogue starts on a new line and uses double quotes `"..."` (no Japanese brackets `「` or single quotes for spoken lines). | Creative Profile & Design Specs |
+| **Creative Profile** | Verify that the language (e.g. Korean) and basic cultural background match the request. *Note: Prose style, 어조, and tone are verified and enforced by the Editor.* | Creative Profile |
 
 ### Step 3: Search for Evidence
 
