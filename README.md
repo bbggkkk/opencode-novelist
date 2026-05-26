@@ -175,8 +175,10 @@ If `series-bible.md` is located directly at the project root, the project is tre
 └── volume-2/                # === 3단계: 권 레벨 (Volume 2) ===
 ```
 
-### Series Bible (`series-bible.md`)
-The `series-bible.md` file tracks chronology, summaries of previous volumes, character evolution logs (e.g. ages, injuries, relationship modifications), and unresolved plot threads for the active work. The `@novelist-loremaster` automatically retrieves these elements to guide sub-agents during drafting.
+### Series Bible & Style Guide (`series-bible.md` & `settings/style-guide.md`)
+The `series-bible.md` file tracks chronology, summaries of previous volumes, character evolution logs (e.g. ages, injuries, relationship modifications), and unresolved plot threads for the active work. 
+
+**Work-Level Style Guide**: The prose style (style, tone, vocabulary preferences, and specific author/person style imitation targets) is formally declared in either the `## Style Guide` section of `series-bible.md` or a local config file at `settings/style-guide.md` at the active Work level. The `@novelist` router and `@novelist-loremaster` automatically inherit and propagate these style settings, ensuring that all volumes and drafts written under this Work maintain a consistent, unified prose style without requiring manual style declarations in every prompt.
 
 ## Usage Examples
 
