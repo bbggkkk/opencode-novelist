@@ -82,6 +82,14 @@ Each router agent analyzes the user's natural language request and **delegates**
 
 Routers never attempt to perform the work themselves — they evaluate the request and hand off a complete brief to the sub-agent.
 
+## Multi-Volume & Series Architecture
+
+The system supports dynamically expanding series through an isomorphic multi-volume layout:
+- **Global settings (`settings/`)**: World rules, magic systems, and base character profiles remain identical for all volumes.
+- **Series Bible (`series-bible.md`)**: Acts as a central ledger tracking the chronological sequence, summaries of previous volumes, character status evolution (ages, injuries), and unresolved plot threads.
+- **Volume Directories (`volume-N/`)**: Individual folders for each volume. A single-volume project utilizes `volume-1/`, while sequels add `volume-2/` and so forth.
+- **Volume Routing**: The router detects the targeted volume from user parameters or folder structures, directing `@novelist-loremaster` to fetch previous summaries from the Series Bible, and `@novelist-publisher` to output compiled `.epub` files directly in `volume-N/`.
+
 ## Separation of Concerns
 
 The design separates creation from feedback at every level:

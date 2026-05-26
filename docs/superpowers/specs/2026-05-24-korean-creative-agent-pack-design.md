@@ -122,7 +122,11 @@ permission:
    - Decoupled styling is enforced: indentations, padding, and line spacing are written inside the EPUB's `stylesheet.css`, allowing CSS to drive rendering.
    - Packaging is completed via standard system `zip` shell commands, keeping the pack lightweight and free of Python runtime dependencies.
 4. **Change Log**: The Editor maintains a Change Log to prevent circular or conflicting modifications.
-5. **Narrative Continuity**: Loremaster retrieves the latest Narrative State (previous episode summary, character states, timeline details) to ensure natural flow and logical transitions.
+5. **Series Bible & Narrative Continuity**:
+   - The global `series-bible.md` ledger tracks chronology, summaries of previous volumes, character evolution states, and active plot threads.
+   - For Volume N (where N > 1), `@novelist-loremaster` retrieves previous volume summaries from the Series Bible to construct the backstory context.
+   - Character attributes (ages, injuries) must align with the active volume's Evolution Log in `series-bible.md`.
+   - Local narrative states (previous chapter outlines, character conditions) are loaded relative to the active volume directory (`volume-N/`).
 
 ## Testing And Verification
 

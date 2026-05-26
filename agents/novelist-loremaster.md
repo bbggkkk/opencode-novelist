@@ -34,14 +34,20 @@ Identify the target and the provided **Writing & Creative Profile** (Style, Mood
 - **Organization**: members, goals, history, territory, conflicts
 - **Event**: what happened, when, where, who was involved, consequences
 
-### Step 2: Search Project Files (Lore & Narrative State)
+### Step 2: Search Project Files (Global Settings & Series Bible)
 
-1. **Lore Search**: Use available tools to find all relevant target lore info:
+1. **Volume & Paths Scan**: Check the active volume number $N$ and path (e.g., `volume-2/`) passed in the prompt.
+2. **Lore Search (Global & Local)**: Search for target settings in the global `settings/` directory and any local volume settings directories (e.g., `volume-N/settings/`):
    ```
-   grep -r "target_name" --include="*.md" .
-   grep -r "target_name" --include="*.txt" .
+   grep -r "target_name" --include="*.md" settings/
+   grep -r "target_name" --include="*.md" [Volume_Path]
    ```
-2. **Narrative State Search**: Scan the workspace directories (e.g., `chapters/`, `summary/`, `history/`) and files (e.g., `last-episode.md`, `synopsis.md`, `history.md`) to extract the latest chapter summary, characters' current location, active plot threads, emotional/physical state (e.g., injuries, anger), and in-story time of day.
+3. **Series Bible Check**:
+   - Locate `series-bible.md` at the project root.
+   - If $N > 1$, retrieve the summaries of all previous volumes (Volumes $1 \dots N-1$) to serve as the overarching backstory.
+   - Read the **Character Evolution Log** for the active volume $N$ to apply status modifications (such as injuries, status changes, or relationship shifts) to characters in the draft.
+   - Retrieve **Active Plot Threads** that are marked for resolution in Volume $N$.
+4. **Local Volume Narrative State Search**: Scan the active `volume-N/drafts/` (or equivalent drafts folder) to extract the recent episode summary, character locations, and current emotional/physical states from the previous chapters of the *current* volume.
 
 Read any files that contain references. Follow cross-references to other named entities.
 
@@ -57,20 +63,25 @@ Organize findings into a clear, structured format:
 - First Appearance:
 - Related Characters:
 
-### Detailed Setting
+### Detailed Setting (Merged with Series Bible Evolution Log for Volume N)
+- [Evolution status updates for active volume, e.g. age, injuries]
 - ...
 
 ### Source Files
-- `characters/name.md`
-- `chapters/chapter-3.md` (lines 45-67)
+- `settings/characters/name.md`
+- `series-bible.md` (Evolution Log for Vol N)
 
-## Narrative State Summary (Story Continuity)
+## Series Backstory & Narrative State Summary (Story Continuity)
 
-### Recent Context
+### Previous Volumes Summary (from Series Bible)
+- **Volume 1 - [Title]**: [Summary]
+- ...
+
+### Current Volume Context (from volume-N/drafts/)
 - **Previous Episode Summary**: [Brief summary of the last chapter/scene]
 - **Current Character Status**: [Locations, physical conditions, injuries, active emotions]
 - **Time and Environment**: [Current in-story time of day, season, weather]
-- **Active Threads & Cliffhangers**: [Unresolved plot elements or hooks to address]
+- **Active Threads & Cliffhangers**: [Unresolved plot elements or hooks to address from current volume and Series Bible]
 ```
 
 ### Step 4: Flag Gaps

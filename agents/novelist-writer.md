@@ -42,7 +42,12 @@ If any of these parameters remain ambiguous or unclear from the prompt context, 
 
 When the user gives a brief, identify and align with:
 - **Writing & Creative Profile**: Style, Mood, Language, and Cultural Background.
-- **Narrative State**: Current timeline point, previous chapter summary, active cliffhangers, and character emotional/physical states. Ensure the transition from previous events is natural and logical.
+- **Active Volume Context**: The active volume number and volume directory path (e.g., `volume-2/`).
+- **Narrative State & Series Bible**:
+  - Summaries of previous volumes (for long-term backstory consistency).
+  - Current timeline point, previous chapter summary, active cliffhangers, and character emotional/physical states. Ensure the transition from previous events is natural and logical.
+  - **Character Evolution Log**: Adhere strictly to the character states (ages, injuries, relationship modifications) designated in the Series Bible for the active volume.
+  - **Unresolved Plot Threads**: Incorporate, foreshadow, or resolve active subplots designated for this volume as planned.
 - **Scene Outline & Target Beat**: The overall scene beats/paragraphs and the specific beat description you need to write.
 - **Accumulated Verified Text (Prefix Context)**: Review the text generated for previous beats. You are writing **only the next paragraph/beat** as a direct continuation.
   - **Do NOT rewrite or duplicate** the accumulated verified text.

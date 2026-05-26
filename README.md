@@ -101,13 +101,35 @@ mkdir -p .opencode/agents
 cp -r agents/* .opencode/agents/
 ```
 
-### After Installation
-
 Restart opencode for changes to take effect:
 
 ```bash
 opencode exit  # or Ctrl+D, then restart
 ```
+
+## Series & Multi-Volume Writing Layout
+
+To support writing long-running multi-volume series, projects use a unified, isomorphic directory layout. A single-volume book simply has one volume folder (`volume-1/`), which can scale dynamically by adding `volume-2/`, `volume-3/`, etc.
+
+```text
+[project-root]/
+├── settings/                # Global settings (canon across all volumes)
+│   ├── magic-system.md
+│   └── characters/
+│       └── protagonist.md
+├── series-bible.md          # Global chronology, summaries, evolution logs, plot threads
+├── volume-1/                # Volume 1 folder
+│   ├── outline.md
+│   ├── drafts/              # Draft chapters
+│   └── volume-1.epub        # Compiled EPUB
+└── volume-2/                # Volume 2 folder (sequel)
+    ├── outline.md
+    ├── drafts/
+    └── volume-2.epub
+```
+
+### Series Bible (`series-bible.md`)
+The `series-bible.md` file tracks chronology and coordinates character evolution logs across volumes. When writing Volume $N$, the router automatically retrieves previous volume summaries and character evolutions to propagate to the sub-agents.
 
 ## Usage Examples
 
