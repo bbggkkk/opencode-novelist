@@ -19,23 +19,31 @@ Lyricist (Router)
 
 ## Feedback Loop
 
-The Novelist router runs a **structured feedback loop** for all writing requests, using a deterministic setting-first hierarchy for automatic conflict resolution, strict verification (no safety bypasses), and a collaborative discussion protocol to handle unresolvable contradictions or user overrides:
+The Novelist router runs a **structured feedback loop** for all writing requests, using a sequential paragraph-by-paragraph / beat-by-beat buildup model to guarantee near-perfect narrative consistency and logical transitions:
 
 ```
  ① Loremaster → collect setting & narrative state
         │
- ② Writer → writes draft based on setting & narrative state
+ ② Router → Decompose scene brief into sequential beats/paragraphs
         │
- ③ Otaku → cross-examines draft against setting, profile, & narrative state
-       ╱ ╲
-    PASS  FAIL
-      │      ├── [Resolved by Hierarchy] ──> ④ Editor → fixes errors using Otaku report & change log ──> ⑤ re-verify
-      │      └── [Unresolvable or User Intervention] ──> ⑥ Halt Loop & Initiate Collaborative Discussion
-      ▼
-  ⑦ final result delivered to user
+ ┌─────►③ Loop: For each scene-beat:
+ │      │
+ │   ④ Writer → writes next beat/paragraph based on accumulated prefix & settings
+ │      │
+ │   ⑤ Otaku → cross-examines next beat draft against accumulated prefix, outline, & settings
+ │     ╱ ╲
+ │  PASS  FAIL
+ │    │      ├── [Resolved by Hierarchy] ──> ⑥ Editor → fixes errors using Otaku report & change log ──> re-verify
+ │    │      └── [Unresolvable or User Intervention] ──> ⑦ Halt Loop & Initiate Collaborative Discussion
+ │    ▼
+ └─── Consolidate beat into accumulated prefix (repeat until all beats done)
+        │
+        ▼
+   ⑧ final consolidated result delivered to user
 ```
 
 ### Loop Safety & Collaborative Discussion
+- **Step-by-Step Buildup**: Rather than drafting a whole chapter, the router decomposes the scene brief. Each segment/paragraph is generated, verified, and revised in isolation. Once verified, it is locked into the **Accumulated Prefix Text** which acts as canon context for all subsequent segments.
 - **Setting-First Conflict Resolution Hierarchy**: Sub-agents automatically resolve contradictions using the priority order:
   - **Priority 1: Individual Entity Settings (개별 캐릭터/대상 설정 문서)** — Ultimate canon (e.g. character profiles).
   - **Priority 2: General Lore & World-Building Settings (일반 세계관/시스템 설정 문서)** — Overrides plot progression.
@@ -48,7 +56,7 @@ The same agents can also be invoked directly:
 
 | Command | Behavior |
 |---------|----------|
-| `/novelist write Chapter 3` | Full feedback loop (①→②→③→④↺→⑦) |
+| `/novelist write Chapter 3` | Sequential feedback loop (①→②→③→④↺→⑧) |
 | `/novelist-loremaster collect setting on protagonist` | Setting document only |
 | `/novelist-otaku verify this draft` | Verification only |
 | `/novelist-otaku PASS` | Verification passed |

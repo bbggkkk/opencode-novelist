@@ -100,8 +100,11 @@ permission:
 
 ## Loop Safety and Narrative Continuity
 
-1. **Loop Safety & Collaborative Discussion**:
-   - There are **no maximum loop limits or safety bypasses** that auto-approve failed drafts. Verification remains 100% strict.
+1. **Step-by-Step Paragraph/Scene-Beat Loop**:
+   - The Novelist system builds drafts sequentially, beat-by-beat or paragraph-by-paragraph.
+   - For each segment, it runs the `Writer -> Otaku -> Editor` cycle. Once verified, the segment is committed to the **Accumulated Prefix Text** (absolute canon prefix context) and cannot be rewritten or modified by subsequent iterations.
+2. **Loop Safety & Collaborative Discussion**:
+   - There are **no maximum loop limits or safety bypasses** that auto-approve failed drafts. Verification is 100% strict at the segment level.
    - To resolve deadlocks or contradictions:
      - **Setting-First Conflict Resolution Hierarchy**: Sub-agents automatically resolve contradictions using the priority order:
        - **Priority 1: Individual Entity Settings (개별 캐릭터/대상 설정 문서)** — Ultimate canon (e.g., character profiles, item sheets).
@@ -109,8 +112,8 @@ permission:
        - **Priority 3: Recent Narrative State (최근 서사 상태/이전 장 내용)** — Overrides transient user prompts.
        - **Priority 4: User Brief / Transient Prompt (사용자 지시어)** — Lowest priority. Cannot violate established settings.
      - **Collaborative Discussion Protocol**: If a conflict is unresolvable (e.g., direct settings contradiction) or the user intervenes to override settings, the loop **halts**. The agent initiates a structured discussion in the chat: presenting the related Priority 1, 2, and 3 settings details, explaining the contradiction, and proposing how to align the files (e.g., editing the character profile vs general lore) for the user's decision.
-2. **Change Log**: The Editor maintains a Change Log to prevent circular or conflicting modifications.
-3. **Narrative Continuity**: Loremaster retrieves the latest Narrative State (previous episode summary, character states, timeline details) to ensure natural flow and logical transitions.
+3. **Change Log**: The Editor maintains a Change Log to prevent circular or conflicting modifications.
+4. **Narrative Continuity**: Loremaster retrieves the latest Narrative State (previous episode summary, character states, timeline details) to ensure natural flow and logical transitions.
 
 ## Testing And Verification
 

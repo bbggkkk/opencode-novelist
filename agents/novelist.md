@@ -49,7 +49,7 @@ Before executing any routing rule (especially writing, editing, or research):
 
 ## Feedback Loop Protocol
 
-For **writing requests**, execute the full feedback loop. Do not skip steps. Ensure the unified Creative Profile and the gathered Narrative State are propagated to all steps in the loop.
+For **writing requests**, execute the step-by-step scene-beat / paragraph buildup loop. Do not draft the entire scene/chapter in a single pass. Ensure that the Writing & Creative Profile, accumulated prefix text, and lore settings are propagated to all steps in the loop to guarantee near-perfect coherence.
 
 ### Loop Safety & Collaborative Discussion Rules
 1. **Setting-First Conflict Resolution Hierarchy**: All agents must adhere to the setting priority order to resolve contradictions automatically:
@@ -66,15 +66,22 @@ For **writing requests**, execute the full feedback loop. Do not skip steps. Ens
 ```
  ① Loremaster → collect setting & narrative state
         │
- ② Writer → write draft based on setting & narrative state
+ ② Router → Decompose scene brief into sequential beats/paragraphs
         │
- ③ Otaku → verify draft against setting, profile, & narrative state
-       ╱ ╲
-    PASS  FAIL
-      │      ├── [Resolved by Hierarchy] ──> ④ Editor → fix based on Otaku report & change log ──> ⑤ re-verify
-      │      └── [Unresolvable or User Intervention] ──> ⑥ Halt Loop & Initiate Collaborative Discussion with User
-      ▼
-  ⑦ Return final result
+ ┌─────►③ Loop: For each scene-beat:
+ │      │
+ │   ④ Writer → write next beat/paragraph based on accumulated prefix & settings
+ │      │
+ │   ⑤ Otaku → verify next beat draft against accumulated prefix, outline, & settings
+ │     ╱ ╲
+ │  PASS  FAIL
+ │    │      ├── [Resolved by Hierarchy] ──> ⑥ Editor → fix next beat draft ──> re-verify
+ │    │      └── [Unresolvable or User Intervention] ──> ⑦ Halt Loop & Initiate Collaborative Discussion with User
+ │    ▼
+ └─── Consolidate beat into accumulated prefix (repeat until all beats done)
+        │
+        ▼
+   ⑧ Done → deliver final consolidated result to user
 ```
 
 ### Step-by-Step
@@ -86,50 +93,58 @@ Include alignment constraints from:
 [Creative Profile]
 ```
 
-**② Write Draft**
+**② Decompose Scene Brief**
+Router plans the scene outline by decomposing the user request into sequential beats or paragraph outlines.
+
+**③ Loop: For each scene-beat/paragraph**
+Run the drafting and verification loop for the current beat, passing the accumulated verified text from previous beats as prefix context:
+
+**④ Write Next Beat**
 ```
-@novelist-writer: [user request brief]
+@novelist-writer: Write the next paragraph/beat: [current beat outline/description]
 Creative Profile:
 [Creative Profile]
-Narrative State:
-[loremaster narrative state output]
-Reference setting documents:
-[loremaster lore output]
+Scene Outline:
+[decomposed scene-beats]
+Accumulated verified text (Write continuation from here - DO NOT rewrite this):
+[previously verified paragraphs]
+Narrative State & Setting documents:
+[loremaster output]
 ```
 
-**③ Verify**
+**⑤ Verify Next Beat**
 ```
-@novelist-otaku: Verify the following draft against the setting document, Creative Profile, and Narrative State (specifically checking transition flow).
+@novelist-otaku: Verify the next beat draft against the accumulated verified text, scene outline, Creative Profile, and lore settings.
 Creative Profile:
 [Creative Profile]
-Narrative State:
+Scene Outline:
 [...]
-Setting document:
-[...]
-Draft:
+Accumulated verified text:
+[previously verified paragraphs]
+Next beat draft to verify:
+[writer output]
+Setting documents:
 [...]
 ```
 
-**④ Fix** (only when Otaku returns FAIL)
+**⑥ Fix Next Beat** (only when Otaku returns FAIL)
 ```
-@novelist-editor: Fix the draft based on the Otaku report below. Make sure to adhere to the Creative Profile and Narrative State. Maintain a Change Log to prevent circular or conflicting edits. Resolve any contradictions according to the Priority Hierarchy.
+@novelist-editor: Fix the next beat draft based on the Otaku report below. Make sure to adhere to the accumulated verified text and settings. Resolve any contradictions according to the Priority Hierarchy.
 Creative Profile:
 [Creative Profile]
-Narrative State:
-[...]
+Accumulated verified text:
+[previously verified paragraphs]
+Next beat draft:
+[writer output]
 Otaku report:
 [...]
-Draft:
-[...]
-Previous changes made (Change Log):
+Previous changes made to this beat (Change Log):
 [...]
 ```
 
-**⑤ Re-verify** → go back to step ③ (repeat until PASS)
+**⑦ Halt Loop & Initiate Collaborative Discussion** → If an unresolvable contradiction is detected or the user intervenes, halt the loop, present the Priority 1, 2, 3 details, and suggest how to align them to begin a discussion.
 
-**⑥ Halt Loop & Initiate Collaborative Discussion** → If an unresolvable contradiction is detected or the user intervenes, halt the loop, present the Priority 1, 2, 3 details, and suggest how to align them to begin a discussion.
-
-**⑦ Done** — deliver the final result to the user.
+**⑧ Done** — once all beats/paragraphs are verified and accumulated, deliver the final consolidated result to the user.
 
 ## Routing Rules
 

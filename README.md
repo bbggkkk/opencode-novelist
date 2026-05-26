@@ -31,23 +31,31 @@ A hierarchical Korean creative agent pack for opencode. The **Novelist** and **L
 
 ## Feedback Loop
 
-The Novelist router runs a structured feedback loop for every writing request, using a deterministic setting-first hierarchy for automatic conflict resolution, strict verification (no safety bypasses), and a collaborative discussion protocol to handle unresolvable contradictions or user overrides:
+The Novelist router runs a structured, paragraph-by-paragraph / beat-by-beat buildup feedback loop. Instead of drafting the entire scene at once, it generates and strictly verifies each segment sequentially using a prefix-constrained architecture:
 
 ```
  ① Loremaster → collect setting & narrative state
         │
- ② Writer → write draft based on setting & narrative state
+ ② Router → Decompose scene brief into sequential beats/paragraphs
         │
- ③ Otaku → verify draft against setting, profile, & narrative state
-       ╱ ╲
-    PASS  FAIL
-      │      ├── [Resolved by Hierarchy] ──> ④ Editor → fix based on Otaku report & change log ──> ⑤ re-verify
-      │      └── [Unresolvable or User Intervention] ──> ⑥ Halt Loop & Initiate Collaborative Discussion
-      ▼
-  ⑦ Return final result
+ ┌─────►③ Loop: For each scene-beat:
+ │      │
+ │   ④ Writer → write next beat/paragraph based on accumulated prefix & settings
+ │      │
+ │   ⑤ Otaku → verify next beat draft against accumulated prefix, outline, & settings
+ │     ╱ ╲
+ │  PASS  FAIL
+ │    │      ├── [Resolved by Hierarchy] ──> ⑥ Editor → fix next beat draft ──> re-verify
+ │    │      └── [Unresolvable or User Intervention] ──> ⑦ Halt Loop & Initiate Collaborative Discussion
+ │    ▼
+ └─── Consolidate beat into accumulated prefix (repeat until all beats done)
+        │
+        ▼
+   ⑧ Done → deliver final consolidated result to user
 ```
 
 ### Loop Safety & Collaborative Discussion
+- **Step-by-Step Buildup**: Each beat/paragraph is verified and revised individually. Once verified, it becomes part of the permanent "accumulated prefix text" that serves as the absolute canon context for subsequent beats.
 - **Setting-First Conflict Resolution Hierarchy**: When resolving contradictions, agents follow a strict priority order: 
   - **Priority 1: Individual Entity Settings (개별 캐릭터/대상 설정 문서)** — Ultimate canon (e.g. character profiles).
   - **Priority 2: General Lore & World-Building Settings (일반 세계관/시스템 설정 문서)** — Overrides plot progression.

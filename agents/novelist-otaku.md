@@ -25,27 +25,28 @@ Find every inconsistency, contradiction, and deviation between the draft and the
 
 ### Step 1: Receive Input
 
-You receive four parameters:
+You receive five parameters:
 1. **Setting document** — from `@novelist-loremaster` (or provided directly)
 2. **Writing & Creative Profile** — from the router (Style/Tone, Mood, Language, and Cultural Background)
-3. **Narrative State Summary** — from `@novelist-loremaster` (recent plot summary, character emotional/physical states, active threads)
-4. **Draft** — the text to verify (scene, chapter, character description, etc.)
+3. **Accumulated Verified Text (Prefix Context)** — previously verified text. Treat this as absolute canon for continuation.
+4. **Draft of Next Beat** — the newly generated paragraph/beat to verify.
+5. **Scene Outline** — the decomposed scene beats or paragraph outlines.
 
-### Step 2: Cross-Examine
+### Step 2: Cross-Examine (Strict Next-Beat Verification)
 
-Check every claim in the draft against the setting document, Writing & Creative Profile, Narrative State Summary, and any source files you can find:
+Your job is to cross-examine *only* the **Draft of Next Beat** for absolute consistency. Do not verify or request changes to the already consolidated **Accumulated Verified Text**—treat it as unchangeable canon. Verify the Draft of Next Beat against the setting document, Writing & Creative Profile, Accumulated Verified Text, and the Scene Outline:
 
-| Category | What to check |
-|----------|--------------|
-| **Character** | Name spelling, age, appearance, personality, abilities, relationships, backstory events |
-| **Location** | Geography, atmosphere, distance between places, established details |
-| **Timeline** | Sequence of events, time of day, season, duration, character ages |
-| **Magic/System** | Rules, limitations, costs, who can use it, known exceptions |
-| **Dialogue** | Character speech patterns, knowledge they should/shouldn't have |
-| **Physical** | Injuries, items, clothing, possessions carried between scenes |
-| **Logic** | Cause and effect, character motivation, world physics |
-| **Creative Profile** | Tone consistency, style alignment, correct language usage, and appropriate cultural/regional context |
-| **Narrative Flow & Continuity** | Transitions from the previous episode summary (e.g., did characters stay in logical locations, did current scene pick up active plot threads/cliffhangers naturally?) |
+| Category | What to check in the Next Beat Draft | Reference Sources |
+|----------|--------------------------------------|-------------------|
+| **Prefix Transition** | Does it connect seamlessly and naturally to the end of the Accumulated Verified Text? | End of Accumulated Verified Text |
+| **Character** | Name spelling, appearance, personality, abilities, relationships, backstory | Setting doc & Accumulated Verified Text |
+| **Location** | Geography, atmosphere, distance, established details | Setting doc & Accumulated Verified Text |
+| **Timeline** | Sequence of events, elapsed time, season, character ages | Accumulated Verified Text |
+| **Magic/System** | Rules, limitations, costs, known exceptions | Setting doc & Accumulated Verified Text |
+| **Dialogue** | Speech patterns, knowledge consistency, 반말/존댓말 alignment | Accumulated Verified Text |
+| **Physical** | Injuries, items carried, clothing state carried over | Accumulated Verified Text |
+| **Logic** | Cause and effect, character motivation, consistency with the Scene Outline | Accumulated Verified Text & Scene Outline |
+| **Creative Profile** | Tone consistency, style alignment, language & cultural context | Creative Profile |
 
 ### Step 3: Search for Evidence
 

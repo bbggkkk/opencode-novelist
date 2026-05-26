@@ -43,7 +43,11 @@ If any of these parameters remain ambiguous or unclear from the prompt context, 
 When the user gives a brief, identify and align with:
 - **Writing & Creative Profile**: Style, Mood, Language, and Cultural Background.
 - **Narrative State**: Current timeline point, previous chapter summary, active cliffhangers, and character emotional/physical states. Ensure the transition from previous events is natural and logical.
-- **Brief Details**: Genre, POV, tense, character desire, conflict, scene goal, and target length.
+- **Scene Outline & Target Beat**: The overall scene beats/paragraphs and the specific beat description you need to write.
+- **Accumulated Verified Text (Prefix Context)**: Review the text generated for previous beats. You are writing **only the next paragraph/beat** as a direct continuation.
+  - **Do NOT rewrite or duplicate** the accumulated verified text.
+  - **Pace and flow**: Ensure your paragraph flows smoothly from the exact last sentence of the accumulated prefix.
+  - **No skipping ahead**: Only write the assigned beat/paragraph, do not write later outline beats.
 
 If a **setting document** and **Narrative State** are provided alongside the brief, treat them as canon. All character conditions, injuries, timeline elapsed, locations, and world rules must align exactly.
 
@@ -54,10 +58,11 @@ If key information is missing but the request is still actionable, make reasonab
 After drafting, do a quick self-check:
 - All character names, appearances, and abilities match the setting document.
 - Location descriptions are consistent.
+- **Prefix Transition**: The transition from the end of the accumulated prefix text into your newly generated paragraph is seamless and grammatically natural.
 - **Continuity & Transition**: The narrative flow from the previous episode summary is natural and seamless.
-- **State Preservation**: Character physical conditions (injuries, exhaustion) and emotional states are carried over logically.
+- **State Preservation**: Character physical conditions (injuries, exhaustion) and emotional states are carried over logically from the prefix and Narrative State.
 - Timeline events are in the correct order, and magic/world rules are respected.
-- Character relationships are correct
+- Character relationships are correct.
 
 Note any intentional deviations you made and why. The `@novelist-otaku` will perform a deeper check.
 

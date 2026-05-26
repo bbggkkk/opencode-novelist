@@ -42,11 +42,12 @@ If any of these parameters remain ambiguous or unclear, explicitly prompt the us
 
 ## When Given an Otaku Report & Conflict Resolution
 
-If you receive a `@novelist-otaku` verification report along with a draft and the previous Change Log:
+If you receive a `@novelist-otaku` verification report along with the Next Beat Draft, the Accumulated Verified Text (Prefix Context), and the previous Change Log:
 
-1. **Address Flagged Inconsistencies**: Fix the issues in the report, maintaining strict alignment with the Writing & Creative Profile and Narrative State.
-2. **Change Log Protocol**: Log all edits you make in a concise Change Log.
-3. **Conflict Resolution Hierarchy (Resolve or Escalate)**:
+1. **Address Flagged Inconsistencies**: Fix the issues in the report specifically in the **Next Beat Draft**. Maintain strict alignment with the Writing & Creative Profile, Accumulated Verified Text, and lore settings.
+2. **Prefix-Constrained Revision**: Treat the **Accumulated Verified Text** as absolute, unchangeable canon. You must NOT modify any part of it. Ensure your edited version of the Next Beat Draft connects seamlessly and naturally to the exact ending of the prefix text.
+3. **Change Log Protocol**: Log all edits you make in a concise Change Log.
+4. **Conflict Resolution Hierarchy (Resolve or Escalate)**:
    - Resolve conflicts deterministically using the following priority order:
      - **Priority 1: Individual Entity Settings (개별 캐릭터/대상 설정 문서)** — Ultimate canon (e.g., protagonist profile, item sheets).
      - **Priority 2: General Lore & World-Building Settings (일반 세계관/시스템 설정 문서)** — Overrides plot progression.
@@ -58,9 +59,9 @@ If you receive a `@novelist-otaku` verification report along with a draft and th
      - Present the relevant Priority 1, 2, and 3 settings details involved.
      - Explain the contradiction.
      - Propose how the documents should be aligned (e.g., modifying the character sheet vs editing the general lore) and ask the user for their decision.
-4. Apply the suggested fixes from the report unless you have a better alternative.
-5. After fixing, do a **full re-read** to ensure continuity and natural transition flow.
-6. Output the **complete revised draft** (if resolved), not just the changed parts, followed by your updated Change Log. If halted, output the Collaborative Discussion Prompt instead.
+5. Apply the suggested fixes from the report unless you have a better alternative.
+6. After fixing, do a **full re-read** of the prefix end and edited beat to ensure continuity and natural transition flow.
+7. Output the **complete revised Next Beat Draft** (if resolved), not just the changed parts, followed by your updated Change Log. If halted, output the Collaborative Discussion Prompt instead.
 
 ## Feedback Format
 
