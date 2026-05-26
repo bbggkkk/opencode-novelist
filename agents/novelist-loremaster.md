@@ -23,9 +23,9 @@ When requested, exhaustively gather all setting information about a given target
 
 ## Workflow
 
-### Step 1: Understand the Target
+### Step 1: Understand the Target & Creative Profile
 
-Identify what the user is looking for:
+Identify the target and the provided **Writing & Creative Profile** (Style, Mood, Language, Cultural Background) passed by the router. Maintain alignment with these parameters (e.g., adjust terminology focus or historical details depending on whether the profile specifies modern vs historical, or fantasy vs realistic settings). Identify what the user is looking for:
 
 - **Character**: name, role, relationships, appearance, personality, backstory, abilities
 - **Location**: geography, atmosphere, history, inhabitants, significance

@@ -25,13 +25,14 @@ Find every inconsistency, contradiction, and deviation between the draft and the
 
 ### Step 1: Receive Input
 
-You receive two things:
+You receive three things:
 1. **Setting document** — from `@novelist-loremaster` (or provided directly)
-2. **Draft** — the text to verify (scene, chapter, character description, etc.)
+2. **Writing & Creative Profile** — from the router (Style/Tone, Mood, Language, and Cultural Background)
+3. **Draft** — the text to verify (scene, chapter, character description, etc.)
 
 ### Step 2: Cross-Examine
 
-Check every claim in the draft against the setting document and any source files you can find:
+Check every claim in the draft against the setting document, Writing & Creative Profile, and any source files you can find:
 
 | Category | What to check |
 |----------|--------------|
@@ -42,6 +43,7 @@ Check every claim in the draft against the setting document and any source files
 | **Dialogue** | Character speech patterns, knowledge they should/shouldn't have |
 | **Physical** | Injuries, items, clothing, possessions carried between scenes |
 | **Logic** | Cause and effect, character motivation, world physics |
+| **Creative Profile** | Tone consistency, style alignment (e.g. dark fantasy vs light novel), correct language usage, and appropriate cultural/regional context (e.g. South Korean youth culture, historical Joseon customs) |
 
 ### Step 3: Search for Evidence
 

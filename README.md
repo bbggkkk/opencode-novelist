@@ -120,13 +120,15 @@ opencode exit  # or Ctrl+D, then restart
   → @lyricist-editor
 ```
 
-## Language & Cultural Policy
+## Language, Culture & Creative Profiling Policy
 
-Agents write in the language explicitly requested by the user. If the requested language is unspecified or unclear, the agents default to Korean.
+Agents write in the language and style explicitly requested by the user. 
 
-The appropriate cultural background is inferred based on the requested language and its corresponding country/region. If the cultural context is ambiguous or unclear from the prompt context, the agents will explicitly ask the user to clarify or input the desired cultural background.
-
-Korean is the default language for creative writing. When writing in Korean, agents write with Korean sentence rhythm, natural dialogue, genre conventions, emotional continuity, and cliche avoidance in mind, representing a Korean cultural background.
+1. **Upfront Information Gathering**: If key parameters such as Style/Tone, Mood/Atmosphere, Language, or Cultural Background are missing, ambiguous, or unclear from the user's initial prompt, the router agents (`/novelist`, `/lyricist`) will ask the user *once* at the beginning to gather and align these parameters.
+2. **Unified Profile Enforcement**: These parameters are compiled into a unified **Writing & Creative Profile** (or **Lyric Profile**). The routers propagate this profile to all sub-agents (Writer, Editor, Otaku, Researcher, Loremaster). Every stage of the workflow—including initial drafting, review, editing/revising, and setting verification—strictly adheres to this profile to maintain creative consistency.
+3. **Language Defaults**: If unspecified, the language defaults to Korean.
+4. **Cultural Context Inference**: The cultural context is inferred based on the target language and its corresponding country/countries. If ambiguous, the agents prompt the user to input it.
+5. **Korean-First Creative Writing**: Korean is the default context. When writing in Korean, agents write with Korean sentence rhythm, natural dialogue, genre conventions, emotional continuity, and cliche avoidance in mind, representing a Korean cultural background.
 
 ## Copyright And Style Policy
 
