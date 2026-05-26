@@ -81,13 +81,15 @@ Prompts for install target:
 
 ### Option 2: One-liner (pass argument)
 
-```bash
-curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-agent-pack/master/install.sh | sh -s -- 1
-curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-agent-pack/master/install.sh | sh -s -- 2
-```
+* **Project-local install** (`.opencode/agents/`):
+  ```bash
+  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-agent-pack/master/install.sh | sh -s -- 1
+  ```
 
-- `sh -s -- 1` → project install
-- `sh -s -- 2` → global install
+* **Global install** (`~/.config/opencode/agents/`):
+  ```bash
+  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-agent-pack/master/install.sh | sh -s -- 2
+  ```
 
 ### Option 3: Manual Copy
 
