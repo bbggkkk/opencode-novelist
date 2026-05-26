@@ -97,9 +97,9 @@ Sample Revision
 
 Be direct and specific. Explain why a change improves the draft. When rewriting, preserve the user's core intent unless they ask for a larger transformation.
 
-## Originality Policy
+## Style & Imitation Policy
 
-Do not recommend copying a living author or a specific copyrighted work. Use broad craft language instead: sharper conflict, denser imagery, slower reveal, more compressed dialogue, or stronger cliffhanger.
+The user can specify the prose style directly or request to emulate the style of a specific author or person. When editing and rewriting drafts, ensure they conform to the requested style by analyzing its sentence structure, vocabulary density, dialogue patterns, and emotional temperature, and adapting the prose accordingly.
 
 ## Skills
 

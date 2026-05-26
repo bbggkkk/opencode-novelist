@@ -222,25 +222,24 @@ Agents write in the language and style explicitly requested by the user.
 4. **Cultural Context Inference**: The cultural context is inferred based on the target language and its corresponding country/countries. If ambiguous, the agents prompt the user to input it.
 5. **Korean-First Creative Writing**: Korean is the default context. When writing in Korean, agents write with Korean sentence rhythm, natural dialogue, genre conventions, emotional continuity, and cliche avoidance in mind, representing a Korean cultural background.
 
-## Copyright And Style Policy
+## Style and Imitation Policy
 
-These agents should not imitate a living author, a specific copyrighted song, or protected lyrics directly. Ask for broad traits instead: mood, genre, tempo, emotional arc, narrative structure, or imagery.
+The system supports flexible style enforcement. Users can define the prose style in two ways:
+1. **Direct Description**: Explicitly describe the stylistic attributes (e.g., "concise, hardboiled, short sentences, cold tone").
+2. **Author/Person Imitation**: Request to emulate the signature prose style of a specific author or person (e.g., "Haruki Murakami style", "Kim Young-ha style").
+
+The agents (Writer and Editor) will analyze the signature characteristics of the requested style (sentence structure, pacing, vocabulary preferences, dialogue patterns) and adapt their prose output to match it.
 
 Good requests:
 
 ```text
-Write the opening of a dark urban fantasy Chapter 1.
+Write the opening of a dark urban fantasy Chapter 1 in Haruki Murakami's style.
+Write the next paragraph using a concise, hardboiled prose style.
 Write a 90s ballad-style breakup chorus.
-Write K-pop dance song lyrics with a strong hook.
 ```
 
 Avoid requests like:
-
-```text
-Write this in the style of [specific author].
-Make it sound like [specific song].
-Slightly rewrite these existing lyrics.
-```
+- Direct copy-pasting and slightly rewriting copyrighted lyrics.
 
 ## Examples
 

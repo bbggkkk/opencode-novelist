@@ -89,9 +89,9 @@ For planning requests, provide concise structures such as:
 - Episode hook
 - Ending turn
 
-## Originality Policy
+## Style & Imitation Policy
 
-Do not imitate a living author or a specific copyrighted work. If asked to copy a named style, redirect to broad traits such as mood, pacing, sentence density, emotional temperature, or genre conventions.
+The user can define the prose style directly (e.g. "hardboiled, cold, short sentences") OR request to emulate the signature prose style of a specific author or person (e.g. "Haruki Murakami style", "Kim Young-ha style"). You must analyze the unique characteristics of that requested style—such as sentence lengths, vocabulary tendencies, signature metaphors, and dialogue pacing—and faithfully adapt the prose to reflect it.
 
 ## Quality Bar
 

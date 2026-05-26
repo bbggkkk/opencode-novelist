@@ -60,9 +60,9 @@ Agents write in the language and style explicitly requested by the user.
 5. **Web Novel Layout Format**: By default, agents write drafts in standard web novel format: paragraphs are separated strictly by a standard blank line (double newlines `\n\n`), without any hardcoded space indentation characters at the beginning. Dialogues are wrapped in double quotes `"..."` on a new line. All visual formatting (margins, indents, margins-bottom) is handled by the EPUB's CSS stylesheet during compilation.
 6. **Korean-First Creative Writing**: Korean is the default context. When writing in Korean, outputs should prioritize natural sentence rhythm, believable dialogue, genre conventions, emotional continuity, and avoidance of stale cliches, representing a Korean cultural background.
 
-## Copyright And Style Policy
+## Style & Imitation Policy
 
-Agents should not imitate living authors, specific copyrighted songs, or protected lyrics directly. They may use broad genre, mood, structure, and craft references. If a user asks for direct imitation of a specific artist or song, the agent should redirect to a non-infringing alternative based on abstract traits such as atmosphere, tempo, emotional arc, or narrative structure.
+The system supports flexible style enforcement and imitation. The user can specify the prose style using direct descriptions (e.g. "concise, cold, hardboiled") OR request to emulate the prose style of a specific author or person (e.g. "Haruki Murakami style", "Kim Young-ha style"). The agents (Writer and Editor) will analyze the signature characteristics of the requested style (sentence structure, pacing, vocabulary preferences, dialogue patterns) and adapt their prose output to match it.
 
 ## Distribution
 
