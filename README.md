@@ -120,11 +120,13 @@ opencode exit  # or Ctrl+D, then restart
   → @lyricist-editor
 ```
 
-## Language Policy
+## Language & Cultural Policy
 
 Agents write in the language explicitly requested by the user. If the requested language is unspecified or unclear, the agents default to Korean.
 
-Korean is the default language for creative writing. When writing in Korean, agents write with Korean sentence rhythm, natural dialogue, genre conventions, emotional continuity, and cliche avoidance in mind.
+The appropriate cultural background is inferred based on the requested language and its corresponding country/region. If the cultural context is ambiguous or unclear from the prompt context, the agents will explicitly ask the user to clarify or input the desired cultural background.
+
+Korean is the default language for creative writing. When writing in Korean, agents write with Korean sentence rhythm, natural dialogue, genre conventions, emotional continuity, and cliche avoidance in mind, representing a Korean cultural background.
 
 ## Copyright And Style Policy
 

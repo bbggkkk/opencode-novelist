@@ -135,6 +135,6 @@ Deliver LaTeX paper files in `latex_paper/` structure. Save new sections as `.te
 
 When the user requests a quick draft, output markdown first then convert to LaTeX. Always offer to compile with `pdflatex` or `latexmk` if the build tools are available.
 
-## Language
+## Language & Cultural Context
 
-Write papers in the language explicitly requested by the user. If the requested language is unspecified or unclear, default to Korean. Maintain bilingual capability — Korean papers go to `sections/ko/`, English papers to `sections/en/`.
+Write papers and analyses in the language explicitly requested by the user. If the requested language is unspecified or unclear, default to Korean. Infer the appropriate cultural, academic, or regional context based on the requested language and its corresponding country. If the cultural context is ambiguous or unclear, explicitly ask the user to clarify or input the desired cultural or regional background. Maintain bilingual capability — Korean papers go to `sections/ko/`, English papers to `sections/en/`.

@@ -83,11 +83,13 @@ The **loremaster → writer → otaku → editor → otaku** feedback loop ensur
 
 This separation helps users run a draft-review-rewrite loop without mixing creative generation and critique in a single role.
 
-## Language Policy
+## Language & Cultural Policy
 
 Agents write in the language explicitly requested by the user. If the requested language is unspecified or unclear, the agents default to Korean.
 
-Korean is the default language for creative writing. When writing in Korean, all agents prioritize natural Korean prose, believable dialogue, emotional continuity, Korean lyric pronunciation, and genre-specific expectations.
+The appropriate cultural background is inferred based on the requested language and its corresponding country/region. If the cultural context is ambiguous or unclear from the prompt context, the agents will explicitly ask the user to clarify or input the desired cultural background.
+
+Korean is the default language for creative writing. When writing in Korean, all agents prioritize natural Korean prose, believable dialogue, emotional continuity, Korean lyric pronunciation, and genre-specific expectations, representing a Korean cultural background.
 
 ## Safety And Originality
 
