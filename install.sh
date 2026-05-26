@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 # Korean Creative Agents for opencode - Interactive Installation Script
 # https://github.com/bbggkkk/opencode-agent-pack
 
 set -e
 
 REPO_URL="https://raw.githubusercontent.com/bbggkkk/opencode-agent-pack/master"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "=================================================="
 echo " KOREAN CREATIVE AGENTS FOR OPENCODE"
@@ -14,8 +14,15 @@ echo ""
 
 # Detect if running from the repo or via curl
 RUNNING_FROM_REPO=false
-if [[ "$SCRIPT_DIR" == *"opencode-agent-pack"* ]] || [[ -d "$SCRIPT_DIR/agents" ]]; then
+case "$SCRIPT_DIR" in
+    *"opencode-agent-pack"*)
+        RUNNING_FROM_REPO=true
+        ;;
+esac
+if [ "$RUNNING_FROM_REPO" = "false" ] && [ -d "$SCRIPT_DIR/agents" ]; then
     RUNNING_FROM_REPO=true
+fi
+if [ "$RUNNING_FROM_REPO" = "true" ]; then
     echo "Running from the repository."
 fi
 
@@ -29,8 +36,8 @@ echo "2) Global install   ($GLOBAL_TARGET)"
 echo ""
 
 # If no argument provided, prompt interactively
-if [[ -z "$1" ]]; then
-    if [[ ! -t 0 ]]; then
+if [ -z "$1" ]; then
+    if [ ! -t 0 ]; then
         echo "This script requires interactive input or an argument."
         echo ""
         echo "Usage:"
@@ -51,7 +58,8 @@ if [[ -z "$1" ]]; then
         echo ""
         exit 1
     fi
-    read -p "Choose (1/2): " choice
+    printf "Choose (1/2): "
+    read choice
 else
     choice="$1"
 fi
@@ -80,7 +88,7 @@ mkdir -p "$TARGET"
 echo ""
 echo "Installing agents..."
 
-if [[ "$RUNNING_FROM_REPO" == "true" && -d "$SCRIPT_DIR/agents" ]]; then
+if [ "$RUNNING_FROM_REPO" = "true" ] && [ -d "$SCRIPT_DIR/agents" ]; then
     # Copy from local repo
     cp "$SCRIPT_DIR/agents"/*.md "$TARGET/"
 else
