@@ -34,6 +34,8 @@ EPUB edits are source-based: layout, CSS, metadata, TOC, title page, and XHTML p
 
 The Novelist router runs a structured, paragraph-by-paragraph / beat-by-beat buildup feedback loop. Instead of drafting the entire scene at once, it generates and strictly verifies each segment sequentially using a prefix-constrained architecture:
 
+Writing and revision steps are intentionally sequential, not parallel. The router never runs multiple Writer/Editor/Otaku manuscript passes at the same time, because each beat or editable span must consume the latest verified prefix, locked context, ledger state, and verification result from the previous step.
+
 ```
  ① Loremaster → collect setting & narrative state (facts only)
         │
@@ -60,6 +62,7 @@ The Novelist router runs a structured, paragraph-by-paragraph / beat-by-beat bui
 
 ### Loop Safety & Collaborative Discussion
 - **Step-by-Step Buildup**: Each beat/paragraph is verified and revised individually. Once verified, it becomes part of the permanent "accumulated prefix text" that serves as the absolute canon context for subsequent beats.
+- **No Parallel Drafting Or Revision**: Writer, Editor, Otaku verification, manuscript edits, ledger updates, manifest updates, and commits run sequentially. Parallel execution is reserved for independent read-only context gathering only.
 - **Setting-First Conflict Resolution Hierarchy**: When resolving contradictions, agents follow a strict priority order: 
   - **Priority 1: Individual Entity Settings (개별 캐릭터/대상 설정 문서)** — Ultimate canon (e.g. character profiles).
   - **Priority 2: General Lore & World-Building Settings (일반 세계관/시스템 설정 문서)** — Overrides plot progression.
@@ -86,37 +89,63 @@ The Novelist router runs a structured, paragraph-by-paragraph / beat-by-beat bui
   .\install.ps1
   ```
 
-Prompts for install target:
-- **`1`** — Project-local install (`.opencode/agents/`)
-- **`2`** — Global install (`~/.config/opencode/agents/`)
+The interactive installer prompts for install target:
+- **Project-local install** — installs into a selected project's `.opencode/agents/`
+- **Global install** — installs into `~/.config/opencode/agents/`
+
+You can also run the interactive installer without cloning the repository first:
+
+* **Linux / macOS (Bash)**:
+  ```bash
+  sh -c "$(curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh)"
+  ```
+
+* **Windows (PowerShell)**:
+  ```powershell
+  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.ps1)))
+  ```
 
 Templates and support skills are installed outside agent discovery. Project installs use `.opencode/novelist/templates/` and `.opencode/novelist/skills/`; global installs use `~/.config/opencode/novelist/templates/` and `~/.config/opencode/novelist/skills/`. Do not copy templates or skills into an `agents/` directory; opencode may expose Markdown support files as callable agents there.
 
-### Option 2: One-liner (pass argument)
+### Option 2: Agent / Script One-liner
+
+Use non-interactive flags when an agent or automation installs the pack. Project-local installs default to the command's current working directory unless a project path is provided.
 
 #### Linux / macOS (Bash)
 
-* **Project-local install** (`.opencode/agents/`):
+* **Project-local install into current directory**:
   ```bash
-  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- 1
+  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- --project
+  ```
+
+* **Project-local install into an explicit path**:
+  ```bash
+  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- --project /path/to/project
   ```
 
 * **Global install** (`~/.config/opencode/agents/`):
   ```bash
-  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- 2
+  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- --global
   ```
 
 #### Windows (PowerShell)
 
-* **Project-local install** (`.opencode/agents/`):
+* **Project-local install into current directory**:
   ```powershell
-  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.ps1))) 1
+  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.ps1))) --project
+  ```
+
+* **Project-local install into an explicit path**:
+  ```powershell
+  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.ps1))) --project C:\path\to\project
   ```
 
 * **Global install** (`~/.config/opencode/agents/`):
   ```powershell
-  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.ps1))) 2
+  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.ps1))) --global
   ```
+
+Backward-compatible aliases remain available: `./install.sh 1 [project-dir]`, `./install.sh 2`, `.\install.ps1 1 [project-dir]`, and `.\install.ps1 2`.
 
 ### Option 3: Manual Copy
 

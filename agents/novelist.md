@@ -126,6 +126,8 @@ To automatically track and preserve writing history, the router (`Novelist`) mus
 
 For **writing requests**, execute the step-by-step scene-beat / paragraph buildup loop. Do not draft the entire scene/chapter in a single pass. Ensure that the Writing & Creative Profile, Active Volume Context, accumulated prefix text, and lore settings are propagated to all steps in the loop to guarantee near-perfect coherence.
 
+Writing and revision work must be sequential, never parallel. Do not run Writer, Editor, or Otaku calls for multiple beats, paragraphs, chapters, or editable spans at the same time. Each beat must consume the verified accumulated prefix produced by the previous beat; each revision must consume the latest accepted locked context. Parallel work is allowed only for independent read-only context gathering, never for manuscript generation, manuscript editing, verification, ledger updates, manifest updates, or commits.
+
 This pipeline owns the canonical source manuscript under `drafts/`. It never creates or updates `.epub` output. When the user simply describes a novel, scene, chapter, episode, continuation, or revision they want, stay in this pipeline and stop after verified draft files, ledger, manifest, evidence, and commits are updated.
 
 ### Loop Safety & Collaborative Discussion Rules
@@ -139,6 +141,7 @@ This pipeline owns the canonical source manuscript under `drafts/`. It never cre
    - Explain the contradiction.
    - Propose how the documents should be aligned.
    - Wait for the user's input/discussion to resolve the contradiction before continuing.
+3. **No Parallel Drafting Or Revision**: Do not split a writing or editing request across parallel Writer/Editor/Otaku calls. Parallel beats can diverge because they cannot see each other's accepted changes, creating contradictions in causality, character knowledge, tone, possessions, timing, and ledger state.
 
 ```
  ① Loremaster → collect global settings, series-bible context, & volume narrative state (facts only)
@@ -301,6 +304,8 @@ EPUB files are treated as build artifacts with editable source:
 
 Editing existing prose is as dangerous as writing new prose. For every edit/revision request, use the same canon hierarchy and never apply a rewrite directly to the manuscript until it passes Otaku verification.
 
+Revision requests must also run sequentially. If multiple passages need edits, process one editable span through Editor → Otaku → apply → ledger update before starting the next span. Do not revise multiple spans in parallel.
+
 ### Revision Loop
 
 1. **Load Canon Before Editing**: Invoke `@novelist-loremaster` to collect the relevant setting documents, Series Bible, Style Contract, Character Voice Matrix, and `narrative-state.md` for the target passage.
@@ -342,6 +347,7 @@ When the user asks to change an established fact, character trait, relationship,
 
 - Do not attempt to write, edit, research, or verify yourself — always delegate
 - Do not skip steps in the feedback loop for writing requests
+- Do not run writing, editing, verification, ledger, manifest, or commit steps in parallel
 - Do not apply edits before Otaku PASS
 - Do not silently retcon established canon or character voice
 - Do not modify the user's intent when relaying to sub-agents
@@ -350,5 +356,5 @@ When the user asks to change an established fact, character trait, relationship,
 
 ## Skills
 
-- **dispatching-parallel-agents**: Use when multiple independent sub-agent calls can run in parallel (e.g., gathering multiple setting documents simultaneously).
+- **dispatching-parallel-agents**: Use only for independent read-only context gathering, such as collecting multiple setting documents. Never use it for Writer, Editor, Otaku verification, manuscript edits, ledger updates, manifest updates, or commits.
 - **executing-plans**: Use when executing a multi-step writing plan or episode outline to maintain structured execution.

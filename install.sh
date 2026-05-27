@@ -1,11 +1,38 @@
 #!/bin/sh
-# Korean Creative Agents for opencode - Interactive Installation Script
+# Korean Creative Agents for opencode - Installation Script
 # https://github.com/bbggkkk/opencode-novelist
 
 set -e
 
 REPO_URL="https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+INVOCATION_DIR="$(pwd)"
+
+usage() {
+    cat <<'USAGE'
+Usage:
+  # Human interactive install
+  ./install.sh
+
+  # Human interactive install without git clone
+  sh -c "$(curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh)"
+
+  # Agent/non-interactive one-line install
+  ./install.sh --project
+  ./install.sh --project /path/to/project
+  ./install.sh --project-dir /path/to/project
+  ./install.sh --global
+
+  # Backward-compatible aliases
+  ./install.sh 1 [project-dir]
+  ./install.sh 2
+
+  # Remote one-liners
+  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- --project
+  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- --project /path/to/project
+  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- --global
+USAGE
+}
 
 echo "=================================================="
 echo " KOREAN CREATIVE AGENTS FOR OPENCODE"
@@ -14,12 +41,7 @@ echo ""
 
 # Detect if running from the repo or via curl
 RUNNING_FROM_REPO=false
-case "$SCRIPT_DIR" in
-    *"opencode-novelist"*)
-        RUNNING_FROM_REPO=true
-        ;;
-esac
-if [ "$RUNNING_FROM_REPO" = "false" ] && [ -d "$SCRIPT_DIR/agents" ]; then
+if [ -s "$SCRIPT_DIR/agents/novelist.md" ] && [ -s "$SCRIPT_DIR/templates/style-guide.md" ]; then
     RUNNING_FROM_REPO=true
 fi
 if [ "$RUNNING_FROM_REPO" = "true" ]; then
@@ -30,43 +52,83 @@ fi
 GLOBAL_TARGET="$HOME/.config/opencode/agents"
 GLOBAL_TEMPLATE_TARGET="$HOME/.config/opencode/novelist/templates"
 GLOBAL_SKILL_TARGET="$HOME/.config/opencode/novelist/skills"
-PROJECT_TARGET="$SCRIPT_DIR/.opencode/agents"
-PROJECT_TEMPLATE_TARGET="$SCRIPT_DIR/.opencode/novelist/templates"
-PROJECT_SKILL_TARGET="$SCRIPT_DIR/.opencode/novelist/skills"
+PROJECT_DIR="$INVOCATION_DIR"
+choice=""
 
-echo "Select installation target:"
-echo "1) Current project  (.opencode/agents)"
-echo "2) Global install   ($GLOBAL_TARGET)"
-echo ""
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        1|project|--project|--local|local)
+            choice="1"
+            if [ "$#" -gt 1 ]; then
+                case "$2" in
+                    -*|1|2|global|--global)
+                        ;;
+                    *)
+                        PROJECT_DIR="$2"
+                        shift
+                        ;;
+                esac
+            fi
+            ;;
+        2|global|--global)
+            choice="2"
+            ;;
+        --project-dir|--cwd)
+            shift
+            [ "$#" -gt 0 ] || {
+                echo "Missing path for --project-dir"
+                usage
+                exit 1
+            }
+            PROJECT_DIR="$1"
+            if [ -z "$choice" ]; then
+                choice="1"
+            fi
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "Unknown argument: $1"
+            usage
+            exit 1
+            ;;
+    esac
+    shift
+done
 
-# If no argument provided, prompt interactively
-if [ -z "$1" ]; then
+# If no argument provided, prompt interactively for human installs.
+if [ -z "$choice" ]; then
     if [ ! -t 0 ]; then
-        echo "This script requires interactive input or an argument."
+        echo "This script requires interactive input or a non-interactive install target."
         echo ""
-        echo "Usage:"
-        echo ""
-        echo "  # Interactive (download then run)"
-        echo "  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh -o install.sh"
-        echo "  chmod +x install.sh"
-        echo "  ./install.sh"
-        echo ""
-        echo "  # One-liner (pass argument)"
-        echo "  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- 1"
-        echo "  curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- 2"
-        echo ""
-        echo "  # Clone then run (interactive)"
-        echo "  git clone https://github.com/bbggkkk/opencode-novelist.git"
-        echo "  cd opencode-novelist"
-        echo "  ./install.sh"
-        echo ""
+        usage
         exit 1
     fi
+    echo "Select installation target:"
+    echo "1) Project-local install  ([project]/.opencode/agents)"
+    echo "2) Global install         ($GLOBAL_TARGET)"
+    echo ""
     printf "Choose (1/2): "
     read choice
-else
-    choice="$1"
+    if [ "$choice" = "1" ]; then
+        printf "Project directory [%s]: " "$PROJECT_DIR"
+        read project_input
+        if [ -n "$project_input" ]; then
+            PROJECT_DIR="$project_input"
+        fi
+    fi
 fi
+
+if [ "$choice" = "1" ] && [ ! -d "$PROJECT_DIR" ]; then
+    echo "Project directory does not exist: $PROJECT_DIR"
+    exit 1
+fi
+PROJECT_DIR="$(cd "$PROJECT_DIR" && pwd)"
+PROJECT_TARGET="$PROJECT_DIR/.opencode/agents"
+PROJECT_TEMPLATE_TARGET="$PROJECT_DIR/.opencode/novelist/templates"
+PROJECT_SKILL_TARGET="$PROJECT_DIR/.opencode/novelist/skills"
 
 case "$choice" in
     1)
@@ -74,6 +136,7 @@ case "$choice" in
         TEMPLATE_TARGET="$PROJECT_TEMPLATE_TARGET"
         SKILL_TARGET="$PROJECT_SKILL_TARGET"
         echo ""
+        echo "Project directory: $PROJECT_DIR"
         echo "Project-local install: $TARGET"
         echo "Project-local templates: $TEMPLATE_TARGET"
         echo "Project-local skills: $SKILL_TARGET"
@@ -88,7 +151,8 @@ case "$choice" in
         echo "Global skills: $SKILL_TARGET"
         ;;
     *)
-        echo "Invalid choice. Enter 1 (project) or 2 (global)."
+        echo "Invalid choice. Enter 1/--project or 2/--global."
+        usage
         exit 1
         ;;
 esac
@@ -143,7 +207,7 @@ echo "  [Novelist System]"
 echo "   /novelist               - Router (feedback loop orchestrator)"
 echo "   /novelist-writer        - Fiction writer"
 echo "   /novelist-editor        - Fiction editor"
-echo "   /novelist-researcher    - Research / LaTeX papers"
+echo "   /novelist-researcher    - Fiction-context reality research"
 echo "   /novelist-loremaster    - Setting archivist"
 echo "   /novelist-otaku         - Setting consistency verifier"
 echo "   /novelist-publisher     - EPUB build pipeline"

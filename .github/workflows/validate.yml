@@ -25,7 +25,7 @@ jobs:
         run: |
           $env:HOME = Join-Path $env:RUNNER_TEMP "opencode-novelist-home"
           New-Item -ItemType Directory -Force -Path $env:HOME | Out-Null
-          .\install.ps1 2
+          .\install.ps1 --global
           $target = Join-Path $env:HOME ".config/opencode/agents"
           $templateTarget = Join-Path $env:HOME ".config/opencode/novelist/templates"
           $skillTarget = Join-Path $env:HOME ".config/opencode/novelist/skills"
@@ -33,6 +33,7 @@ jobs:
             "novelist.md",
             "novelist-writer.md",
             "novelist-editor.md",
+            "novelist-researcher.md",
             "novelist-loremaster.md",
             "novelist-otaku.md",
             "novelist-publisher.md"
@@ -70,4 +71,28 @@ jobs:
             if (-not (Test-Path $fullPath)) {
               throw "Missing installed template: $fullPath"
             }
+          }
+          $project = Join-Path $env:RUNNER_TEMP "opencode-novelist-project"
+          New-Item -ItemType Directory -Force -Path $project | Out-Null
+          .\install.ps1 --project-dir $project
+          $projectTarget = Join-Path $project ".opencode/agents"
+          $projectTemplateTarget = Join-Path $project ".opencode/novelist/templates"
+          $projectSkillTarget = Join-Path $project ".opencode/novelist/skills"
+          foreach ($path in $requiredAgents) {
+            $fullPath = Join-Path $projectTarget $path
+            if (-not (Test-Path $fullPath)) {
+              throw "Missing project installed file: $fullPath"
+            }
+          }
+          if (Test-Path (Join-Path $projectTarget "templates")) {
+            throw "Project templates must not be installed inside agent discovery path"
+          }
+          if (Test-Path (Join-Path $projectTarget "setting-collapse-detector")) {
+            throw "Project skills must not be installed inside agent discovery path"
+          }
+          if (-not (Test-Path (Join-Path $projectSkillTarget "setting-collapse-detector/SKILL.md"))) {
+            throw "Missing project installed skill"
+          }
+          if (-not (Test-Path (Join-Path $projectTemplateTarget "verification-manifest.md"))) {
+            throw "Missing project installed verification manifest template"
           }

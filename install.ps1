@@ -5,6 +5,26 @@ $ErrorActionPreference = "Stop"
 
 $REPO_URL = "https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master"
 $SCRIPT_DIR = if ($PSScriptRoot) { $PSScriptRoot } else { $PWD.Path }
+$INVOCATION_DIR = (Get-Location).Path
+
+function Show-Usage {
+    Write-Host "Usage:"
+    Write-Host "  # Human interactive install"
+    Write-Host "  .\install.ps1"
+    Write-Host ""
+    Write-Host "  # Human interactive install without git clone"
+    Write-Host "  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.ps1)))"
+    Write-Host ""
+    Write-Host "  # Agent/non-interactive one-line install"
+    Write-Host "  .\install.ps1 --project"
+    Write-Host "  .\install.ps1 --project C:\path\to\project"
+    Write-Host "  .\install.ps1 --project-dir C:\path\to\project"
+    Write-Host "  .\install.ps1 --global"
+    Write-Host ""
+    Write-Host "  # Backward-compatible aliases"
+    Write-Host "  .\install.ps1 1 [project-dir]"
+    Write-Host "  .\install.ps1 2"
+}
 
 Write-Host "==================================================" -ForegroundColor Cyan
 Write-Host " KOREAN CREATIVE AGENTS FOR OPENCODE" -ForegroundColor Cyan
@@ -20,24 +40,81 @@ $PROJECT_SKILL_TARGET = Join-Path $SCRIPT_DIR ".opencode/novelist/skills"
 
 # Determine running mode
 $RunningFromRepo = $false
-if (Test-Path (Join-Path $SCRIPT_DIR "agents")) {
+if ((Test-Path (Join-Path $SCRIPT_DIR "agents")) -and (Test-Path (Join-Path $SCRIPT_DIR "agents/novelist.md")) -and (Test-Path (Join-Path $SCRIPT_DIR "templates/style-guide.md"))) {
     $RunningFromRepo = $true
 }
 if ($RunningFromRepo) {
     Write-Host "Running from the repository."
 }
 
-# Ask choice if argument not provided
+# Parse install target. No args means human interactive mode; args mean
+# non-interactive one-line mode for agents and scripts.
 $Choice = $null
-if ($args.Count -ge 1) {
-    $Choice = $args[0]
-} else {
+$ProjectDir = $INVOCATION_DIR
+$Index = 0
+while ($Index -lt $args.Count) {
+    $Arg = [string]$args[$Index]
+    switch ($Arg) {
+        { $_ -eq "1" -or $_ -eq "project" -or $_ -eq "--project" -or $_ -eq "--local" -or $_ -eq "local" } {
+            $Choice = "1"
+            if (($Index + 1) -lt $args.Count) {
+                $Next = [string]$args[$Index + 1]
+                if (-not $Next.StartsWith("-") -and $Next -ne "1" -and $Next -ne "2" -and $Next -ne "global") {
+                    $ProjectDir = $Next
+                    $Index++
+                }
+            }
+        }
+        { $_ -eq "2" -or $_ -eq "global" -or $_ -eq "--global" } {
+            $Choice = "2"
+        }
+        { $_ -eq "--project-dir" -or $_ -eq "--cwd" } {
+            $Index++
+            if ($Index -ge $args.Count) {
+                Write-Error "Missing path for --project-dir"
+                Show-Usage
+                exit 1
+            }
+            $ProjectDir = [string]$args[$Index]
+            if (-not $Choice) {
+                $Choice = "1"
+            }
+        }
+        { $_ -eq "-h" -or $_ -eq "--help" } {
+            Show-Usage
+            exit 0
+        }
+        default {
+            Write-Error "Unknown argument: $Arg"
+            Show-Usage
+            exit 1
+        }
+    }
+    $Index++
+}
+
+if (-not $Choice) {
     Write-Host "Select installation target:"
-    Write-Host "1) Current project  (.opencode/agents)"
-    Write-Host "2) Global install   ($GLOBAL_TARGET)"
+    Write-Host "1) Project-local install  ([project]/.opencode/agents)"
+    Write-Host "2) Global install         ($GLOBAL_TARGET)"
     Write-Host ""
     $Choice = Read-Host "Choose (1/2)"
+    if ($Choice -eq "1") {
+        $ProjectInput = Read-Host "Project directory [$ProjectDir]"
+        if ($ProjectInput) {
+            $ProjectDir = $ProjectInput
+        }
+    }
 }
+
+if (-not (Test-Path $ProjectDir)) {
+    Write-Error "Project directory does not exist: $ProjectDir"
+    exit 1
+}
+$ProjectDir = (Resolve-Path $ProjectDir).Path
+$PROJECT_TARGET = Join-Path $ProjectDir ".opencode/agents"
+$PROJECT_TEMPLATE_TARGET = Join-Path $ProjectDir ".opencode/novelist/templates"
+$PROJECT_SKILL_TARGET = Join-Path $ProjectDir ".opencode/novelist/skills"
 
 $Target = $null
 if ($Choice -eq "1" -or $Choice -eq 1) {
@@ -45,6 +122,7 @@ if ($Choice -eq "1" -or $Choice -eq 1) {
     $TemplateTarget = $PROJECT_TEMPLATE_TARGET
     $SkillTarget = $PROJECT_SKILL_TARGET
     Write-Host ""
+    Write-Host "Project directory: $ProjectDir" -ForegroundColor Yellow
     Write-Host "Project-local install: $Target" -ForegroundColor Yellow
     Write-Host "Project-local templates: $TemplateTarget" -ForegroundColor Yellow
     Write-Host "Project-local skills: $SkillTarget" -ForegroundColor Yellow
@@ -57,7 +135,8 @@ if ($Choice -eq "1" -or $Choice -eq 1) {
     Write-Host "Global templates: $TemplateTarget" -ForegroundColor Yellow
     Write-Host "Global skills: $SkillTarget" -ForegroundColor Yellow
 } else {
-    Write-Error "Invalid choice. Enter 1 (project) or 2 (global)."
+    Write-Error "Invalid choice. Enter 1/--project or 2/--global."
+    Show-Usage
     exit 1
 }
 
@@ -139,7 +218,7 @@ Write-Host "  [Novelist System]"
 Write-Host "   /novelist               - Router (feedback loop orchestrator)"
 Write-Host "   /novelist-writer        - Fiction writer"
 Write-Host "   /novelist-editor        - Fiction editor"
-Write-Host "   /novelist-researcher    - Research / LaTeX papers"
+Write-Host "   /novelist-researcher    - Fiction-context reality research"
 Write-Host "   /novelist-loremaster    - Setting archivist"
 Write-Host "   /novelist-otaku         - Setting consistency verifier"
 Write-Host "   /novelist-publisher     - EPUB build pipeline"

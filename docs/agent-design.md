@@ -26,6 +26,8 @@ The router keeps source manuscript work and EPUB output work separate.
 
 The Novelist router runs a **structured feedback loop** for all draft writing requests, using a sequential paragraph-by-paragraph / beat-by-beat buildup model to guarantee near-perfect narrative consistency and logical transitions:
 
+Drafting and revision are strictly sequential. The router must not run multiple Writer, Editor, or Otaku manuscript passes in parallel, because each beat or editable span depends on the latest accepted prefix, locked context, ledger state, and verification outcome.
+
 ```
  ① Loremaster → collect setting & narrative state (facts only)
         │
@@ -52,6 +54,7 @@ The Novelist router runs a **structured feedback loop** for all draft writing re
 
 ### Loop Safety & Collaborative Discussion
 - **Step-by-Step Buildup**: Rather than drafting a whole chapter, the router decomposes the scene brief. Each segment/paragraph is generated, verified, and revised in isolation. Once verified, it is locked into the **Accumulated Prefix Text** which acts as canon context for all subsequent segments.
+- **No Parallel Drafting Or Revision**: Writer, Editor, Otaku verification, manuscript edits, ledger updates, manifest updates, and commits run sequentially. Parallelism is allowed only for independent read-only context gathering.
 - **Setting-First Conflict Resolution Hierarchy**: Sub-agents automatically resolve contradictions using the priority order:
   - **Priority 1: Individual Entity Settings (개별 캐릭터/대상 설정 문서)** — Ultimate canon (e.g. character profiles).
   - **Priority 2: General Lore & World-Building Settings (일반 세계관/시스템 설정 문서)** — Overrides plot progression.
@@ -167,7 +170,7 @@ The agents avoid direct imitation of living authors. They convert named-author r
 
 ## Distribution Model
 
-Users install agents via the interactive `install.sh` script:
+Humans install agents via the interactive `install.sh` or `install.ps1` script. The installer lets the user choose project-local or global installation; project-local installs can point at the selected project directory:
 
 ```bash
 git clone https://github.com/bbggkkk/opencode-novelist.git
@@ -175,15 +178,21 @@ cd opencode-novelist
 ./install.sh
 ```
 
-The script accepts an optional argument for non-interactive use:
+Clone-free interactive install is also supported by downloading and executing the installer without leaving a script file behind:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- 1
-curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- 2
+sh -c "$(curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh)"
 ```
 
-- `1` → project-local install (`.opencode/agents/`)
-- `2` → global install (`~/.config/opencode/agents/`)
+Agents and automation must use non-interactive one-line commands. Project-local installs default to the command's current working directory, or can receive an explicit project directory:
+
+```bash
+curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- --project
+curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- --project /path/to/project
+curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.sh | sh -s -- --global
+```
+
+Backward-compatible aliases remain supported: `1 [project-dir]` for project-local install and `2` for global install.
 
 Templates and support skills are deliberately installed outside agent discovery:
 
@@ -212,14 +221,14 @@ Each agent is paired with specific opencode skills that enhance its capabilities
 | `brainstorming` | novelist-writer, novelist-editor | Creative exploration before drafting or revision |
 | `writing-plans` | novelist-writer | Multi-step plan generation for episode outlines |
 | `setting-collapse-detector` | novelist-loremaster, novelist-otaku | Systematic setting consistency verification |
-| `dispatching-parallel-agents` | novelist | Parallel execution of independent sub-agent calls |
+| `dispatching-parallel-agents` | novelist | Parallel read-only context gathering only |
 | `executing-plans` | novelist | Structured execution of multi-step plans |
 
 ### Skill Invocation
 
 - **setting-collapse-detector** is invoked automatically by `@novelist-otaku` on every draft verification, and by `@novelist-loremaster` after collecting setting info to check for internal contradictions.
 - **brainstorming** is invoked by writer/editor agents when the brief is open-ended or when multiple creative approaches need exploration.
-- **dispatching-parallel-agents** is used by routers when multiple independent sub-agent tasks can run simultaneously.
+- **dispatching-parallel-agents** is used by routers only when multiple independent read-only context gathering tasks can run simultaneously. It is not used for Writer, Editor, Otaku verification, manuscript edits, ledger updates, manifest updates, or commits.
 - All agents with skill access declare `skill: allow` in their YAML permission block to enable skill invocation.
 
 ## Production Verification
