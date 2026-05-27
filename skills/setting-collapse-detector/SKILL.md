@@ -1,6 +1,6 @@
 ---
 name: setting-collapse-detector
-description: "Systematically detects setting collapses in fiction: character, timeline, geography, world rules, possession, and dialogue inconsistencies."
+description: "Systematically detects setting collapses in fiction. Use for setting collapse detection, 설정 붕괴 검출, 설정붕괴검출, continuity contradictions, character drift, timeline, geography, world rules, possession, dialogue, style, and voice inconsistencies."
 version: 1.0.0
 author: Novelist System
 tags: [fiction, setting, consistency, verification, lore]

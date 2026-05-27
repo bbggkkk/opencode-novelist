@@ -28,7 +28,7 @@ jobs:
           .\install.ps1 --global
           $target = Join-Path $env:HOME ".config/opencode/agents"
           $templateTarget = Join-Path $env:HOME ".config/opencode/novelist/templates"
-          $skillTarget = Join-Path $env:HOME ".config/opencode/novelist/skills"
+          $skillTarget = Join-Path $env:HOME ".config/opencode/skills"
           $requiredAgents = @(
             "novelist.md",
             "novelist-writer.md",
@@ -77,7 +77,7 @@ jobs:
           .\install.ps1 --project-dir $project
           $projectTarget = Join-Path $project ".opencode/agents"
           $projectTemplateTarget = Join-Path $project ".opencode/novelist/templates"
-          $projectSkillTarget = Join-Path $project ".opencode/novelist/skills"
+          $projectSkillTarget = Join-Path $project ".opencode/skills"
           foreach ($path in $requiredAgents) {
             $fullPath = Join-Path $projectTarget $path
             if (-not (Test-Path $fullPath)) {

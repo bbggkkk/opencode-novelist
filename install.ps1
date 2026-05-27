@@ -33,10 +33,10 @@ Write-Host ""
 
 $GLOBAL_TARGET = Join-Path $HOME ".config/opencode/agents"
 $GLOBAL_TEMPLATE_TARGET = Join-Path $HOME ".config/opencode/novelist/templates"
-$GLOBAL_SKILL_TARGET = Join-Path $HOME ".config/opencode/novelist/skills"
+$GLOBAL_SKILL_TARGET = Join-Path $HOME ".config/opencode/skills"
 $PROJECT_TARGET = Join-Path $SCRIPT_DIR ".opencode/agents"
 $PROJECT_TEMPLATE_TARGET = Join-Path $SCRIPT_DIR ".opencode/novelist/templates"
-$PROJECT_SKILL_TARGET = Join-Path $SCRIPT_DIR ".opencode/novelist/skills"
+$PROJECT_SKILL_TARGET = Join-Path $SCRIPT_DIR ".opencode/skills"
 
 # Determine running mode
 $RunningFromRepo = $false
@@ -114,7 +114,7 @@ if (-not (Test-Path $ProjectDir)) {
 $ProjectDir = (Resolve-Path $ProjectDir).Path
 $PROJECT_TARGET = Join-Path $ProjectDir ".opencode/agents"
 $PROJECT_TEMPLATE_TARGET = Join-Path $ProjectDir ".opencode/novelist/templates"
-$PROJECT_SKILL_TARGET = Join-Path $ProjectDir ".opencode/novelist/skills"
+$PROJECT_SKILL_TARGET = Join-Path $ProjectDir ".opencode/skills"
 
 $Target = $null
 if ($Choice -eq "1" -or $Choice -eq 1) {
@@ -223,7 +223,7 @@ Write-Host "   /novelist-loremaster    - Setting archivist"
 Write-Host "   /novelist-otaku         - Setting consistency verifier"
 Write-Host "   /novelist-publisher     - EPUB build pipeline"
 Write-Host ""
-Write-Host " Skills installed outside agent discovery:"
+Write-Host " Skills installed in OpenCode skill discovery:"
 Write-Host "   $SkillTarget/setting-collapse-detector/SKILL.md"
 Write-Host ""
 Write-Host " Templates installed outside agent discovery:"

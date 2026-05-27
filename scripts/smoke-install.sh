@@ -15,7 +15,7 @@ HOME="$tmp_home" ./install.sh --global >/tmp/opencode-novelist-install.log
 
 target="$tmp_home/.config/opencode/agents"
 template_target="$tmp_home/.config/opencode/novelist/templates"
-skill_target="$tmp_home/.config/opencode/novelist/skills"
+skill_target="$tmp_home/.config/opencode/skills"
 
 [ -s "$target/novelist.md" ] || fail "novelist agent was not installed"
 [ -s "$target/novelist-writer.md" ] || fail "writer agent was not installed"
@@ -41,7 +41,7 @@ HOME="$tmp_home" ./install.sh --project-dir "$tmp_project" >/tmp/opencode-noveli
 
 project_target="$tmp_project/.opencode/agents"
 project_template_target="$tmp_project/.opencode/novelist/templates"
-project_skill_target="$tmp_project/.opencode/novelist/skills"
+project_skill_target="$tmp_project/.opencode/skills"
 
 [ -s "$project_target/novelist.md" ] || fail "project novelist agent was not installed"
 [ -s "$project_target/novelist-researcher.md" ] || fail "project researcher agent was not installed"

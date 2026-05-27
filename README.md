@@ -105,7 +105,7 @@ You can also run the interactive installer without cloning the repository first:
   & ([scriptblock]::Create((irm https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.ps1)))
   ```
 
-Templates and support skills are installed outside agent discovery. Project installs use `.opencode/novelist/templates/` and `.opencode/novelist/skills/`; global installs use `~/.config/opencode/novelist/templates/` and `~/.config/opencode/novelist/skills/`. Do not copy templates or skills into an `agents/` directory; opencode may expose Markdown support files as callable agents there.
+Templates are installed outside agent discovery, while support skills are installed in OpenCode's skill discovery path. Project installs use `.opencode/novelist/templates/` and `.opencode/skills/`; global installs use `~/.config/opencode/novelist/templates/` and `~/.config/opencode/skills/`. Do not copy templates or skills into an `agents/` directory; opencode may expose Markdown support files as callable agents there.
 
 ### Option 2: Agent / Script One-liner
 
@@ -153,18 +153,18 @@ Backward-compatible aliases remain available: `./install.sh 1 [project-dir]`, `.
 # Global install
 mkdir -p ~/.config/opencode/agents
 mkdir -p ~/.config/opencode/novelist/templates
-mkdir -p ~/.config/opencode/novelist/skills
+mkdir -p ~/.config/opencode/skills
 cp -r agents/* ~/.config/opencode/agents/
 cp -r templates/* ~/.config/opencode/novelist/templates/
-cp -r skills/* ~/.config/opencode/novelist/skills/
+cp -r skills/* ~/.config/opencode/skills/
 
 # Per-project install
 mkdir -p .opencode/agents
 mkdir -p .opencode/novelist/templates
-mkdir -p .opencode/novelist/skills
+mkdir -p .opencode/skills
 cp -r agents/* .opencode/agents/
 cp -r templates/* .opencode/novelist/templates/
-cp -r skills/* .opencode/novelist/skills/
+cp -r skills/* .opencode/skills/
 ```
 
 Restart opencode for changes to take effect:

@@ -194,20 +194,20 @@ curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/ins
 
 Backward-compatible aliases remain supported: `1 [project-dir]` for project-local install and `2` for global install.
 
-Templates and support skills are deliberately installed outside agent discovery:
+Templates are deliberately installed outside agent discovery, and support skills are installed in OpenCode skill discovery:
 
 - project-local templates: `.opencode/novelist/templates/`
-- project-local skills: `.opencode/novelist/skills/`
+- project-local skills: `.opencode/skills/`
 - global templates: `~/.config/opencode/novelist/templates/`
-- global skills: `~/.config/opencode/novelist/skills/`
+- global skills: `~/.config/opencode/skills/`
 
 Manual copy is also supported:
 
 ```bash
-mkdir -p ~/.config/opencode/agents ~/.config/opencode/novelist/templates ~/.config/opencode/novelist/skills
+mkdir -p ~/.config/opencode/agents ~/.config/opencode/novelist/templates ~/.config/opencode/skills
 cp -r agents/* ~/.config/opencode/agents/
 cp -r templates/* ~/.config/opencode/novelist/templates/
-cp -r skills/* ~/.config/opencode/novelist/skills/
+cp -r skills/* ~/.config/opencode/skills/
 ```
 
 After installation, restart opencode for changes to take effect.

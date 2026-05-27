@@ -105,7 +105,7 @@ Git clone 없이도 대화형 설치를 실행할 수 있습니다:
   & ([scriptblock]::Create((irm https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/install.ps1)))
   ```
 
-템플릿과 지원 skill은 agent discovery 밖에 설치됩니다. 프로젝트 설치는 `.opencode/novelist/templates/`와 `.opencode/novelist/skills/`, 글로벌 설치는 `~/.config/opencode/novelist/templates/`와 `~/.config/opencode/novelist/skills/`를 사용합니다. `agents/` 디렉터리 아래에 템플릿이나 skill을 복사하지 마세요. opencode가 Markdown 지원 파일을 호출 가능한 에이전트로 노출할 수 있습니다.
+템플릿은 agent discovery 밖에 설치되고, 지원 skill은 OpenCode의 skill discovery 경로에 설치됩니다. 프로젝트 설치는 `.opencode/novelist/templates/`와 `.opencode/skills/`, 글로벌 설치는 `~/.config/opencode/novelist/templates/`와 `~/.config/opencode/skills/`를 사용합니다. `agents/` 디렉터리 아래에 템플릿이나 skill을 복사하지 마세요. opencode가 Markdown 지원 파일을 호출 가능한 에이전트로 노출할 수 있습니다.
 
 ### 옵션 2: 에이전트 / 스크립트용 한 줄 설치
 
@@ -153,18 +153,18 @@ Git clone 없이도 대화형 설치를 실행할 수 있습니다:
 # 글로벌 설치
 mkdir -p ~/.config/opencode/agents
 mkdir -p ~/.config/opencode/novelist/templates
-mkdir -p ~/.config/opencode/novelist/skills
+mkdir -p ~/.config/opencode/skills
 cp -r agents/* ~/.config/opencode/agents/
 cp -r templates/* ~/.config/opencode/novelist/templates/
-cp -r skills/* ~/.config/opencode/novelist/skills/
+cp -r skills/* ~/.config/opencode/skills/
 
 # 프로젝트 로컬 설치
 mkdir -p .opencode/agents
 mkdir -p .opencode/novelist/templates
-mkdir -p .opencode/novelist/skills
+mkdir -p .opencode/skills
 cp -r agents/* .opencode/agents/
 cp -r templates/* .opencode/novelist/templates/
-cp -r skills/* .opencode/novelist/skills/
+cp -r skills/* .opencode/skills/
 ```
 
 설치를 완료한 후 반영을 위해 opencode 세션을 재시작해 주세요:

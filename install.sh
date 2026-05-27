@@ -51,7 +51,7 @@ fi
 # Detect available installation targets
 GLOBAL_TARGET="$HOME/.config/opencode/agents"
 GLOBAL_TEMPLATE_TARGET="$HOME/.config/opencode/novelist/templates"
-GLOBAL_SKILL_TARGET="$HOME/.config/opencode/novelist/skills"
+GLOBAL_SKILL_TARGET="$HOME/.config/opencode/skills"
 PROJECT_DIR="$INVOCATION_DIR"
 choice=""
 
@@ -128,7 +128,7 @@ fi
 PROJECT_DIR="$(cd "$PROJECT_DIR" && pwd)"
 PROJECT_TARGET="$PROJECT_DIR/.opencode/agents"
 PROJECT_TEMPLATE_TARGET="$PROJECT_DIR/.opencode/novelist/templates"
-PROJECT_SKILL_TARGET="$PROJECT_DIR/.opencode/novelist/skills"
+PROJECT_SKILL_TARGET="$PROJECT_DIR/.opencode/skills"
 
 case "$choice" in
     1)
@@ -212,7 +212,7 @@ echo "   /novelist-loremaster    - Setting archivist"
 echo "   /novelist-otaku         - Setting consistency verifier"
 echo "   /novelist-publisher     - EPUB build pipeline"
 echo ""
-echo " Skills installed outside agent discovery:"
+echo " Skills installed in OpenCode skill discovery:"
 echo "   $SKILL_TARGET/setting-collapse-detector/SKILL.md"
 echo ""
 echo " Templates installed outside agent discovery:"
