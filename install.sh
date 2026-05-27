@@ -28,7 +28,9 @@ fi
 
 # Detect available installation targets
 GLOBAL_TARGET="$HOME/.config/opencode/agents"
+GLOBAL_TEMPLATE_TARGET="$HOME/.config/opencode/novelist/templates"
 PROJECT_TARGET="$SCRIPT_DIR/.opencode/agents"
+PROJECT_TEMPLATE_TARGET="$SCRIPT_DIR/.opencode/novelist/templates"
 
 echo "Select installation target:"
 echo "1) Current project  (.opencode/agents)"
@@ -67,13 +69,17 @@ fi
 case "$choice" in
     1)
         TARGET="$PROJECT_TARGET"
+        TEMPLATE_TARGET="$PROJECT_TEMPLATE_TARGET"
         echo ""
         echo "Project-local install: $TARGET"
+        echo "Project-local templates: $TEMPLATE_TARGET"
         ;;
     2)
         TARGET="$GLOBAL_TARGET"
+        TEMPLATE_TARGET="$GLOBAL_TEMPLATE_TARGET"
         echo ""
         echo "Global install: $TARGET"
+        echo "Global templates: $TEMPLATE_TARGET"
         ;;
     *)
         echo "Invalid choice. Enter 1 (project) or 2 (global)."
@@ -81,19 +87,23 @@ case "$choice" in
         ;;
 esac
 
-# Create directory
+# Create directories
 mkdir -p "$TARGET"
+mkdir -p "$TEMPLATE_TARGET"
 
 # Copy/install agents and production templates
 echo ""
 echo "Installing agents and production templates..."
 
+# Older releases installed templates under the agent directory, which can make
+# template Markdown files appear as callable agents in recursive agent discovery.
+rm -rf "$TARGET/templates"
+
 if [ "$RUNNING_FROM_REPO" = "true" ] && [ -d "$SCRIPT_DIR/agents" ]; then
     # Copy from local repo (handles both .md files and skill subdirectories)
     cp -r "$SCRIPT_DIR/agents"/* "$TARGET/"
     if [ -d "$SCRIPT_DIR/templates" ]; then
-        mkdir -p "$TARGET/templates"
-        cp -r "$SCRIPT_DIR/templates"/* "$TARGET/templates/"
+        cp -r "$SCRIPT_DIR/templates"/* "$TEMPLATE_TARGET/"
     fi
 else
     # Download from GitHub
@@ -104,9 +114,8 @@ else
     mkdir -p "$TARGET/setting-collapse-detector"
     curl -sSL "$REPO_URL/agents/setting-collapse-detector/SKILL.md" -o "$TARGET/setting-collapse-detector/SKILL.md"
     # Download production continuity templates
-    mkdir -p "$TARGET/templates"
     for template in style-guide character-sheet item-sheet location-sheet world-rule-sheet series-bible narrative-state verification-manifest verification-evidence retcon-proposal; do
-        curl -sSL "$REPO_URL/templates/${template}.md" -o "$TARGET/templates/${template}.md"
+        curl -sSL "$REPO_URL/templates/${template}.md" -o "$TEMPLATE_TARGET/${template}.md"
     done
 fi
 
@@ -128,15 +137,15 @@ echo "   /novelist-loremaster    - Setting archivist"
 echo "   /novelist-otaku         - Setting consistency verifier"
 echo "   /novelist-publisher     - EPUB build pipeline"
 echo ""
-echo " Templates installed:"
-echo "   templates/style-guide.md"
-echo "   templates/character-sheet.md"
-echo "   templates/item-sheet.md"
-echo "   templates/location-sheet.md"
-echo "   templates/world-rule-sheet.md"
-echo "   templates/series-bible.md"
-echo "   templates/narrative-state.md"
-echo "   templates/verification-manifest.md"
-echo "   templates/verification-evidence.md"
-echo "   templates/retcon-proposal.md"
+echo " Templates installed outside agent discovery:"
+echo "   $TEMPLATE_TARGET/style-guide.md"
+echo "   $TEMPLATE_TARGET/character-sheet.md"
+echo "   $TEMPLATE_TARGET/item-sheet.md"
+echo "   $TEMPLATE_TARGET/location-sheet.md"
+echo "   $TEMPLATE_TARGET/world-rule-sheet.md"
+echo "   $TEMPLATE_TARGET/series-bible.md"
+echo "   $TEMPLATE_TARGET/narrative-state.md"
+echo "   $TEMPLATE_TARGET/verification-manifest.md"
+echo "   $TEMPLATE_TARGET/verification-evidence.md"
+echo "   $TEMPLATE_TARGET/retcon-proposal.md"
 echo "=================================================="

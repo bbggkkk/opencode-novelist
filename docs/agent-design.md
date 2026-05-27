@@ -184,10 +184,17 @@ curl -sSL https://raw.githubusercontent.com/bbggkkk/opencode-novelist/master/ins
 - `1` → project-local install (`.opencode/agents/`)
 - `2` → global install (`~/.config/opencode/agents/`)
 
+Templates are deliberately installed outside agent discovery:
+
+- project-local templates: `.opencode/novelist/templates/`
+- global templates: `~/.config/opencode/novelist/templates/`
+
 Manual copy is also supported:
 
 ```bash
+mkdir -p ~/.config/opencode/agents ~/.config/opencode/novelist/templates
 cp -r agents/* ~/.config/opencode/agents/
+cp -r templates/* ~/.config/opencode/novelist/templates/
 ```
 
 After installation, restart opencode for changes to take effect.

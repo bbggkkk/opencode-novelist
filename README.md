@@ -90,6 +90,8 @@ Prompts for install target:
 - **`1`** — Project-local install (`.opencode/agents/`)
 - **`2`** — Global install (`~/.config/opencode/agents/`)
 
+Templates are installed outside agent discovery, under `.opencode/novelist/templates/` for project installs or `~/.config/opencode/novelist/templates/` for global installs. Do not copy templates into an `agents/` directory; opencode may expose Markdown templates as callable agents there.
+
 ### Option 2: One-liner (pass argument)
 
 #### Linux / macOS (Bash)
@@ -121,13 +123,15 @@ Prompts for install target:
 ```bash
 # Global install
 mkdir -p ~/.config/opencode/agents
+mkdir -p ~/.config/opencode/novelist/templates
 cp -r agents/* ~/.config/opencode/agents/
-cp -r templates ~/.config/opencode/agents/
+cp -r templates/* ~/.config/opencode/novelist/templates/
 
 # Per-project install
 mkdir -p .opencode/agents
+mkdir -p .opencode/novelist/templates
 cp -r agents/* .opencode/agents/
-cp -r templates .opencode/agents/
+cp -r templates/* .opencode/novelist/templates/
 ```
 
 Restart opencode for changes to take effect:

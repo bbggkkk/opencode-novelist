@@ -27,28 +27,40 @@ jobs:
           New-Item -ItemType Directory -Force -Path $env:HOME | Out-Null
           .\install.ps1 2
           $target = Join-Path $env:HOME ".config/opencode/agents"
-          $required = @(
+          $templateTarget = Join-Path $env:HOME ".config/opencode/novelist/templates"
+          $requiredAgents = @(
             "novelist.md",
             "novelist-writer.md",
             "novelist-editor.md",
             "novelist-loremaster.md",
             "novelist-otaku.md",
             "novelist-publisher.md",
-            "setting-collapse-detector/SKILL.md",
-            "templates/style-guide.md",
-            "templates/character-sheet.md",
-            "templates/item-sheet.md",
-            "templates/location-sheet.md",
-            "templates/world-rule-sheet.md",
-            "templates/series-bible.md",
-            "templates/narrative-state.md",
-            "templates/verification-manifest.md",
-            "templates/verification-evidence.md",
-            "templates/retcon-proposal.md"
+            "setting-collapse-detector/SKILL.md"
           )
-          foreach ($path in $required) {
+          foreach ($path in $requiredAgents) {
             $fullPath = Join-Path $target $path
             if (-not (Test-Path $fullPath)) {
               throw "Missing installed file: $fullPath"
+            }
+          }
+          if (Test-Path (Join-Path $target "templates")) {
+            throw "Templates must not be installed inside agent discovery path"
+          }
+          $requiredTemplates = @(
+            "style-guide.md",
+            "character-sheet.md",
+            "item-sheet.md",
+            "location-sheet.md",
+            "world-rule-sheet.md",
+            "series-bible.md",
+            "narrative-state.md",
+            "verification-manifest.md",
+            "verification-evidence.md",
+            "retcon-proposal.md"
+          )
+          foreach ($path in $requiredTemplates) {
+            $fullPath = Join-Path $templateTarget $path
+            if (-not (Test-Path $fullPath)) {
+              throw "Missing installed template: $fullPath"
             }
           }

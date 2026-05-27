@@ -12,7 +12,9 @@ Write-Host "==================================================" -ForegroundColor
 Write-Host ""
 
 $GLOBAL_TARGET = Join-Path $HOME ".config/opencode/agents"
+$GLOBAL_TEMPLATE_TARGET = Join-Path $HOME ".config/opencode/novelist/templates"
 $PROJECT_TARGET = Join-Path $SCRIPT_DIR ".opencode/agents"
+$PROJECT_TEMPLATE_TARGET = Join-Path $SCRIPT_DIR ".opencode/novelist/templates"
 
 # Determine running mode
 $RunningFromRepo = $false
@@ -38,12 +40,16 @@ if ($args.Count -ge 1) {
 $Target = $null
 if ($Choice -eq "1" -or $Choice -eq 1) {
     $Target = $PROJECT_TARGET
+    $TemplateTarget = $PROJECT_TEMPLATE_TARGET
     Write-Host ""
     Write-Host "Project-local install: $Target" -ForegroundColor Yellow
+    Write-Host "Project-local templates: $TemplateTarget" -ForegroundColor Yellow
 } elseif ($Choice -eq "2" -or $Choice -eq 2) {
     $Target = $GLOBAL_TARGET
+    $TemplateTarget = $GLOBAL_TEMPLATE_TARGET
     Write-Host ""
     Write-Host "Global install: $Target" -ForegroundColor Yellow
+    Write-Host "Global templates: $TemplateTarget" -ForegroundColor Yellow
 } else {
     Write-Error "Invalid choice. Enter 1 (project) or 2 (global)."
     exit 1
@@ -53,9 +59,19 @@ if ($Choice -eq "1" -or $Choice -eq 1) {
 if (-not (Test-Path $Target)) {
     New-Item -ItemType Directory -Force -Path $Target | Out-Null
 }
+if (-not (Test-Path $TemplateTarget)) {
+    New-Item -ItemType Directory -Force -Path $TemplateTarget | Out-Null
+}
 
 Write-Host ""
 Write-Host "Installing agents and production templates..."
+
+# Older releases installed templates under the agent directory, which can make
+# template Markdown files appear as callable agents in recursive agent discovery.
+$LegacyTemplateTarget = Join-Path $Target "templates"
+if (Test-Path $LegacyTemplateTarget) {
+    Remove-Item -Path $LegacyTemplateTarget -Recurse -Force
+}
 
 $Agents = @(
     "novelist", "novelist-writer", "novelist-editor", "novelist-researcher",
@@ -67,10 +83,6 @@ if ($RunningFromRepo) {
     Copy-Item -Path (Join-Path $SCRIPT_DIR "agents\*") -Destination $Target -Recurse -Force
     $TemplateSource = Join-Path $SCRIPT_DIR "templates"
     if (Test-Path $TemplateSource) {
-        $TemplateTarget = Join-Path $Target "templates"
-        if (-not (Test-Path $TemplateTarget)) {
-            New-Item -ItemType Directory -Force -Path $TemplateTarget | Out-Null
-        }
         Copy-Item -Path (Join-Path $TemplateSource "*") -Destination $TemplateTarget -Recurse -Force
     }
 } else {
@@ -90,13 +102,9 @@ if ($RunningFromRepo) {
     Invoke-WebRequest -Uri $SkillUrl -OutFile $SkillOutPath -UseBasicParsing
 
     # Download production continuity templates
-    $TemplateDir = Join-Path $Target "templates"
-    if (-not (Test-Path $TemplateDir)) {
-        New-Item -ItemType Directory -Force -Path $TemplateDir | Out-Null
-    }
     foreach ($Template in @("style-guide", "character-sheet", "item-sheet", "location-sheet", "world-rule-sheet", "series-bible", "narrative-state", "verification-manifest", "verification-evidence", "retcon-proposal")) {
         $TemplateUrl = "$REPO_URL/templates/$($Template).md"
-        $TemplateOutPath = Join-Path $TemplateDir "$($Template).md"
+        $TemplateOutPath = Join-Path $TemplateTarget "$($Template).md"
         Invoke-WebRequest -Uri $TemplateUrl -OutFile $TemplateOutPath -UseBasicParsing
     }
 }
@@ -119,15 +127,15 @@ Write-Host "   /novelist-loremaster    - Setting archivist"
 Write-Host "   /novelist-otaku         - Setting consistency verifier"
 Write-Host "   /novelist-publisher     - EPUB build pipeline"
 Write-Host ""
-Write-Host " Templates installed:"
-Write-Host "   templates/style-guide.md"
-Write-Host "   templates/character-sheet.md"
-Write-Host "   templates/item-sheet.md"
-Write-Host "   templates/location-sheet.md"
-Write-Host "   templates/world-rule-sheet.md"
-Write-Host "   templates/series-bible.md"
-Write-Host "   templates/narrative-state.md"
-Write-Host "   templates/verification-manifest.md"
-Write-Host "   templates/verification-evidence.md"
-Write-Host "   templates/retcon-proposal.md"
+Write-Host " Templates installed outside agent discovery:"
+Write-Host "   $TemplateTarget/style-guide.md"
+Write-Host "   $TemplateTarget/character-sheet.md"
+Write-Host "   $TemplateTarget/item-sheet.md"
+Write-Host "   $TemplateTarget/location-sheet.md"
+Write-Host "   $TemplateTarget/world-rule-sheet.md"
+Write-Host "   $TemplateTarget/series-bible.md"
+Write-Host "   $TemplateTarget/narrative-state.md"
+Write-Host "   $TemplateTarget/verification-manifest.md"
+Write-Host "   $TemplateTarget/verification-evidence.md"
+Write-Host "   $TemplateTarget/retcon-proposal.md"
 Write-Host "=================================================="
