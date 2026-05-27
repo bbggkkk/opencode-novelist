@@ -92,9 +92,10 @@ Router never attempts to perform the work itself — it evaluates the request an
 
 ## 3-Level Franchise, Work & Volume Hierarchy Architecture
 
-The system supports dynamically expanding shared-universe franchises, multi-volume series, or standalone novels through an isomorphic 3-level hierarchy layout:
+The system supports dynamically expanding shared-universe franchises, multi-volume series, and single-work projects through one isomorphic 3-level hierarchy layout:
 - **Franchise Level (Global settings - `settings/` at root)**: World rules, magic systems, and base character profiles that are shared across all works in the same universe.
-- **Work Level (Specific novel/series - `[Active Work Path]`)**: A subdirectory representing a specific work containing its own `series-bible.md` ledger and work-specific `settings/` local overrides/additions. If `series-bible.md` is at the project root, the project is treated as a standalone work (root acts as both Franchise and Work).
+- **Work Level (Specific novel/series - `[Active Work Path]`)**: A subdirectory representing a specific work containing its own `series-bible.md` ledger and work-specific `settings/` local overrides/additions. This subdirectory is required even when the franchise currently has only one work.
+- Root-level `series-bible.md` is not a valid production layout; move it under `[franchise-root]/[work-slug]/series-bible.md`.
 - **Volume Level (Individual books - `[Active Work Path][Active Volume Path]`)**: Individual folders for each volume (e.g. `volume-1/`, `volume-2/`) containing local outlines (`outline.md`) and chapter drafts (`drafts/`).
 - **Cascading Context Routing**: The router detects the active Work directory and active Volume number/path from the request context or directory structure. It propagates this `Hierarchy Context` (`Active Work Path`, `Active Volume Number`, `Active Volume Path`) to sub-agents. The `@novelist-loremaster` cascades the settings resolution (Franchise settings + Work local overrides + Series Bible evolution log + Volume narrative state), and `@novelist-publisher` compiles EPUBs using the system `zip` utility relative to the volume path.
 

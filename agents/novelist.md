@@ -40,7 +40,8 @@ Plain novel-writing requests always go to the Draft Pipeline. Do not build EPUB 
    - **Franchise (프랜차이즈)**: The project root directory (absolute workspace root). Holds global `settings/`.
    - **Work (작품)**: Detect the active Work directory (e.g. `work-a/`).
      - Scan the request for a specific work name or scan the project directory for subdirectories containing a `series-bible.md`.
-     - If no work subdirectories containing a `series-bible.md` exist (or if `series-bible.md` is at the root), the project root `./` is treated as the active Work (standalone mode).
+     - The project root is always the Franchise root, even when there is only one work. Do not treat a root-level `series-bible.md` as an active Work.
+     - If no work subdirectory containing a `series-bible.md` exists, create or ask for a work slug and scaffold `[franchise-root]/[work-slug]/series-bible.md`, `[franchise-root]/[work-slug]/settings/`, and `[franchise-root]/[work-slug]/volume-1/`.
    - **Volume (권)**: Detect the active Volume folder (e.g., `volume-N/`) within the active Work.
      - Scan the request for a volume number (e.g., "Volume 2", "2권").
      - If unspecified, default to the highest numbered `volume-N/` directory inside the active Work, or `volume-1/` if none exist.
@@ -168,7 +169,7 @@ This pipeline owns the canonical source manuscript under `drafts/`. It never cre
 **① Collect Setting Documents, Series Bible, & Narrative State**
 ```
 @novelist-loremaster: Collect global setting information for: [target characters/places/items] AND retrieve Series Bible summaries for Volumes 1 to [Active Volume - 1] AND retrieve the recent local Narrative State for [Active Volume] (previous episode summary, character states, active plot threads, time of day).
-Active Work Path: [Work Path (e.g., work-a/ or ./ for standalone)]
+Active Work Path: [Work Path (e.g., work-a/; never the franchise root)]
 Active Volume Number: [Volume Number]
 Active Volume Path: [Volume Path (e.g., volume-2/)]
 Required Artifacts: settings/style-guide.md, series-bible.md, narrative-state.md

@@ -142,7 +142,7 @@ exit  # or Ctrl+D, then restart opencode
 
 ## 3-Level Franchise, Work & Volume Hierarchy Layout
 
-To support writing complex shared-universe franchises, multi-volume series, or standalone novels, projects use a unified, isomorphic 3-level hierarchy layout:
+To support writing complex shared-universe franchises, multi-volume series, or a single current novel that may grow into multiple works later, projects use one unified 3-level hierarchy layout:
 
 1. **프랜차이즈 레벨 (Franchise Level)**: The project root directory (workspace root). Contains global `settings/` (shared lore, characters, worldview).
 2. **작품 레벨 (Work Level)**: A subdirectory representing a specific novel/series (e.g., `work-a/`). Contains `series-bible.md` and work-specific `settings/` (local characters, items, overrides).
@@ -172,18 +172,22 @@ To support writing complex shared-universe franchises, multi-volume series, or s
     └── volume-1/            # === 3단계: 권 레벨 (Volume 1 of Work B) ===
 ```
 
-### 2. Standalone Work Layout (단독 작품 구조 - Isomorphic Fallback)
-If `series-bible.md` is located directly at the project root, the project is treated as a single standalone work. The root acts as both the Franchise and Work level, and `volume-N/` directories are placed directly at the root:
+### 2. Single Work Franchise Layout (한 작품 프랜차이즈 구조)
+Even if there is only one current work, keep the same structure as a multi-work franchise. The project root remains the Franchise level, and the work gets its own subdirectory so more works can be added later without migration:
 ```text
-[project-root]/               # === 1단계 & 2단계 통합: 프랜차이즈 & 작품 레벨 ===
-├── settings/                # 이 작품의 설정
-├── series-bible.md          # 이 작품의 시리즈 바이블
+[project-root]/               # === 1단계: 프랜차이즈 레벨 ===
+├── settings/                # 선택 사항: 나중에 여러 작품이 공유할 전역 설정
 │
-├── volume-1/                # === 3단계: 권 레벨 (Volume 1) ===
-│   ├── outline.md
-│   └── drafts/
-└── volume-2/                # === 3단계: 권 레벨 (Volume 2) ===
+└── [first-work]/            # === 2단계: 작품 레벨 ===
+    ├── series-bible.md
+    ├── settings/
+    ├── volume-1/            # === 3단계: 권 레벨 ===
+    │   ├── outline.md
+    │   └── drafts/
+    └── volume-2/
 ```
+
+Root-level `series-bible.md` is not a valid production layout. Move it into a work directory such as `[project-root]/[work-slug]/series-bible.md`.
 
 ### Series Bible & Style Guide (`series-bible.md` & `settings/style-guide.md`)
 The `series-bible.md` file tracks chronology, summaries of previous volumes, character evolution logs (e.g. ages, injuries, relationship modifications), and unresolved plot threads for the active work. 

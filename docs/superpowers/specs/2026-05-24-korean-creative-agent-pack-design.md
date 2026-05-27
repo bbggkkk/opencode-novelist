@@ -116,8 +116,8 @@ permission:
    - Packaging is completed via standard system `zip` shell commands, keeping the pack lightweight and free of Python runtime dependencies.
 4. **Change Log**: The Editor maintains a Change Log to prevent circular or conflicting modifications.
 5. **Series Bible, Style Guide & Narrative Continuity in 3-Level Hierarchy**:
-   - The system organizes creative projects into an isomorphic 3-level hierarchy: Franchise (shared settings at root), Work (subdirectory with `series-bible.md` and work local `settings/`), and Volume (subdirectory like `volume-N/` inside the work).
-   - If `series-bible.md` is at the project root, the project falls back to Standalone mode, treating the root as both Franchise and Work levels.
+   - The system organizes creative projects into an isomorphic 3-level hierarchy: Franchise (shared settings at root), Work (required subdirectory with `series-bible.md` and work local `settings/`), and Volume (subdirectory like `volume-N/` inside the work).
+   - Root-level `series-bible.md` is not a valid production layout; even a one-work franchise must use a work subdirectory so more works can be added later.
    - The `series-bible.md` ledger (at Work level) tracks chronology, summaries of previous volumes, character evolution states, and active plot threads for that specific work.
    - **Work-Level Style Guide**: The prose style (style, tone, vocabulary preferences, broad reference traits, and Character Voice Matrix) is formally declared in either the `## Style Guide` section of `series-bible.md` or a local config file at `settings/style-guide.md` at the active Work level. The `@novelist` router automatically inherits and propagates these style settings to the Writer and Editor, ensuring that all volumes and drafts written under this Work maintain a consistent, unified prose style.
    - **Volume Narrative State**: Each active volume maintains `narrative-state.md` as a continuity ledger for current timeline point, locked-prefix summary, character locations, inventory, injuries, emotional state, relationship deltas, and open hooks.

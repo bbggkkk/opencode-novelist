@@ -48,7 +48,7 @@ If any parameter remains ambiguous but does not alter the core output, proceed w
 
 When the user gives a brief, identify and align with:
 - **Writing & Creative Profile**: Style, Mood, Language, and Cultural Background.
-- **Active Hierarchy Context**: Active Work Path (e.g. `work-a/` or `./` for standalone) and Active Volume Path (e.g., `volume-2/`).
+- **Active Hierarchy Context**: Active Work Path (e.g. `work-a/`; never the franchise root) and Active Volume Path (e.g., `work-a/volume-2/`).
 - **Narrative State & Series Bible (Work Level)**:
   - Backstory summaries of previous volumes retrieved from `series-bible.md` (for long-term backstory consistency).
   - Current timeline point, previous chapter summary, active cliffhangers, and character emotional/physical states. Ensure the transition from previous events is natural and logical.

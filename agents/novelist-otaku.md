@@ -31,7 +31,7 @@ You receive six parameters:
 3. **Accumulated Verified Text (Prefix Context)** — previously verified text. Treat this as absolute canon for continuation.
 4. **Draft of Next Beat** — the newly generated paragraph/beat to verify.
 5. **Scene Outline** — the decomposed scene beats or paragraph outlines.
-6. **Active Hierarchy Context** — Active Work Path (e.g. `work-a/` or `./` for standalone), Active Volume Number, and Active Volume Path (e.g. `volume-N/`).
+6. **Active Hierarchy Context** — Active Work Path (e.g. `work-a/`; never the franchise root), Active Volume Number, and Active Volume Path (e.g. `work-a/volume-N/`).
 7. **Continuity Artifacts** — `[Active Work Path]series-bible.md`, `[Active Work Path]settings/style-guide.md`, and `[Active Work Path][Active Volume Path]narrative-state.md` when present.
 
 ### Step 2: Cross-Examine (Strict Next-Beat Verification)

@@ -31,7 +31,7 @@ Ensure that compiled novels are 100% compliant with standard EPUB 2.0/3.0 valida
 
 ### Step 1: Gather Inputs
 You will receive:
-1. **Active Hierarchy Context**: Active Work Path (e.g. `work-a/` or `./` for standalone) and Active Volume Context (Active Volume Number and Active Volume Path, e.g. `volume-2/`).
+1. **Active Hierarchy Context**: Active Work Path (e.g. `work-a/`; never the franchise root) and Active Volume Context (Active Volume Number and Active Volume Path, e.g. `work-a/volume-2/`).
 2. **Book & Series Metadata**: Load book title, volume title, author, and language from `[Active Work Path]series-bible.md` (or local `[Active Work Path][Active Volume Path]outline.md` if bible is not present).
 3. **Manuscript Chapters**: Final, verified raw text drafts located in `[Active Work Path][Active Volume Path]drafts/`.
 4. **Verification Manifest**: `[Active Work Path][Active Volume Path]verification-manifest.md`, proving every draft file to be packaged matches its recorded `Draft SHA256`, matches its recorded `Canon Snapshot SHA256`, has final `@novelist-otaku` PASS status, Editor Style Drift Audit PASS, Editor Character Voice Audit PASS, ledger updates, and a matching Verification Evidence report.
