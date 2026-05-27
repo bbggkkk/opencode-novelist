@@ -62,6 +62,7 @@ jobs:
             "world-rule-sheet.md",
             "series-bible.md",
             "narrative-state.md",
+            "writing-session.md",
             "verification-manifest.md",
             "verification-evidence.md",
             "retcon-proposal.md"
@@ -95,4 +96,7 @@ jobs:
           }
           if (-not (Test-Path (Join-Path $projectTemplateTarget "verification-manifest.md"))) {
             throw "Missing project installed verification manifest template"
+          }
+          if (-not (Test-Path (Join-Path $projectTemplateTarget "writing-session.md"))) {
+            throw "Missing project installed writing session template"
           }

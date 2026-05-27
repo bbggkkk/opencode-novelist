@@ -189,7 +189,7 @@ else
     mkdir -p "$SKILL_TARGET/setting-collapse-detector"
     curl -sSL "$REPO_URL/skills/setting-collapse-detector/SKILL.md" -o "$SKILL_TARGET/setting-collapse-detector/SKILL.md"
     # Download production continuity templates
-    for template in style-guide character-sheet item-sheet location-sheet world-rule-sheet series-bible narrative-state verification-manifest verification-evidence retcon-proposal; do
+    for template in style-guide character-sheet item-sheet location-sheet world-rule-sheet series-bible narrative-state writing-session verification-manifest verification-evidence retcon-proposal; do
         curl -sSL "$REPO_URL/templates/${template}.md" -o "$TEMPLATE_TARGET/${template}.md"
     done
 fi
@@ -223,6 +223,7 @@ echo "   $TEMPLATE_TARGET/location-sheet.md"
 echo "   $TEMPLATE_TARGET/world-rule-sheet.md"
 echo "   $TEMPLATE_TARGET/series-bible.md"
 echo "   $TEMPLATE_TARGET/narrative-state.md"
+echo "   $TEMPLATE_TARGET/writing-session.md"
 echo "   $TEMPLATE_TARGET/verification-manifest.md"
 echo "   $TEMPLATE_TARGET/verification-evidence.md"
 echo "   $TEMPLATE_TARGET/retcon-proposal.md"

@@ -198,7 +198,7 @@ if ($RunningFromRepo) {
     Invoke-WebRequest -Uri $SkillUrl -OutFile $SkillOutPath -UseBasicParsing
 
     # Download production continuity templates
-    foreach ($Template in @("style-guide", "character-sheet", "item-sheet", "location-sheet", "world-rule-sheet", "series-bible", "narrative-state", "verification-manifest", "verification-evidence", "retcon-proposal")) {
+    foreach ($Template in @("style-guide", "character-sheet", "item-sheet", "location-sheet", "world-rule-sheet", "series-bible", "narrative-state", "writing-session", "verification-manifest", "verification-evidence", "retcon-proposal")) {
         $TemplateUrl = "$REPO_URL/templates/$($Template).md"
         $TemplateOutPath = Join-Path $TemplateTarget "$($Template).md"
         Invoke-WebRequest -Uri $TemplateUrl -OutFile $TemplateOutPath -UseBasicParsing
@@ -234,6 +234,7 @@ Write-Host "   $TemplateTarget/location-sheet.md"
 Write-Host "   $TemplateTarget/world-rule-sheet.md"
 Write-Host "   $TemplateTarget/series-bible.md"
 Write-Host "   $TemplateTarget/narrative-state.md"
+Write-Host "   $TemplateTarget/writing-session.md"
 Write-Host "   $TemplateTarget/verification-manifest.md"
 Write-Host "   $TemplateTarget/verification-evidence.md"
 Write-Host "   $TemplateTarget/retcon-proposal.md"

@@ -26,7 +26,7 @@ A hierarchical Korean creative agent pack for opencode. The **Novelist** router 
 
 Plain novel-writing requests go to the **Draft Pipeline**. If you describe the novel, scene, chapter, continuation, or revision you want, `/novelist` writes and verifies source drafts only. It does not create EPUB output.
 
-Use an explicit build command such as `build`, `epub build`, `publish`, `EPUB로 만들어`, `출판`, or `패키징` to activate the **Build Pipeline**. The Build Pipeline reads already verified drafts, creates or updates editable EPUB source in `epub-src/`, then packages `volume-N.epub`.
+Use an explicit build command such as `build`, `epub build`, `publish`, `create EPUB`, or `package` to activate the **Build Pipeline**. The Build Pipeline reads already verified drafts, creates or updates editable EPUB source in `epub-src/`, then packages `volume-N.epub`.
 
 EPUB edits are source-based: layout, CSS, metadata, TOC, title page, and XHTML packaging fixes happen in `epub-src/` and are rebuilt. Story prose or canon edits must go back through the Draft Pipeline first, then be rebuilt.
 
@@ -47,7 +47,7 @@ Writing and revision steps are intentionally sequential, not parallel. The route
  │      │
  │   ⑤ Otaku → verify next beat draft (initial lore check) & produce report
  │      │
- │   ⑥ Editor → ALWAYS runs. Polishes prose style, 어투, formatting, & resolves Otaku-flagged errors
+ │   ⑥ Editor → ALWAYS runs. Polishes prose style, speech style, formatting, & resolves Otaku-flagged errors
  │      │
  │   ⑦ Otaku (Final Verify) → verifies polished beat
  │     ╱ ╲
@@ -63,11 +63,12 @@ Writing and revision steps are intentionally sequential, not parallel. The route
 ### Loop Safety & Collaborative Discussion
 - **Step-by-Step Buildup**: Each beat/paragraph is verified and revised individually. Once verified, it becomes part of the permanent "accumulated prefix text" that serves as the absolute canon context for subsequent beats.
 - **No Parallel Drafting Or Revision**: Writer, Editor, Otaku verification, manuscript edits, ledger updates, manifest updates, and commits run sequentially. Parallel execution is reserved for independent read-only context gathering only.
+- **Interruptible Sessions**: Long writing, continuation, revision, setting migration, and build work records a file-based checkpoint in `writing-session.md`, with unverified temporary work isolated under `.session/`. If the process stops, `/novelist resume` or a continuation request validates hashes, manifest rows, evidence, ledger state, and locked revision context before continuing.
 - **Setting-First Conflict Resolution Hierarchy**: When resolving contradictions, agents follow a strict priority order: 
-  - **Priority 1: Individual Entity Settings (개별 캐릭터/대상 설정 문서)** — Ultimate canon (e.g. character profiles).
-  - **Priority 2: General Lore & World-Building Settings (일반 세계관/시스템 설정 문서)** — Overrides plot progression.
-  - **Priority 3: Recent Narrative State (최근 서사 상태/이전 장 내용)** — Overrides transient user prompts.
-  - **Priority 4: User Brief / Transient Prompt (사용자 지시어)** — Lowest priority. Cannot violate established settings.
+  - **Priority 1: Individual Entity Settings** — Ultimate canon (e.g. character profiles).
+  - **Priority 2: General Lore & World-Building Settings** — Overrides plot progression.
+  - **Priority 3: Recent Narrative State** — Overrides transient user prompts.
+  - **Priority 4: User Brief / Transient Prompt** — Lowest priority. Cannot violate established settings.
 - **Strict Verification**: Loop safety iteration limits and relaxed warnings are removed. Verification is always 100% strict.
 - **Collaborative Discussion Protocol**: If settings directly contradict each other or if the user intervenes, the loop halts, and the agent initiates a discussion presenting Priority 1, 2, and 3 settings details to align them.
 
@@ -177,44 +178,44 @@ exit  # or Ctrl+D, then restart opencode
 
 To support writing complex shared-universe franchises, multi-volume series, or a single current novel that may grow into multiple works later, projects use one unified 3-level hierarchy layout:
 
-1. **프랜차이즈 레벨 (Franchise Level)**: The project root directory (workspace root). Contains global `settings/` (shared lore, characters, worldview).
-2. **작품 레벨 (Work Level)**: A subdirectory representing a specific novel/series (e.g., `work-a/`). Contains `series-bible.md` and work-specific `settings/` (local characters, items, overrides).
-3. **권 레벨 (Volume Level)**: A subdirectory within the active work (e.g., `work-a/volume-1/`). Contains `outline.md` and `drafts/`.
+1. **Franchise Level**: The project root directory (workspace root). Contains global `settings/` (shared lore, characters, worldview).
+2. **Work Level**: A subdirectory representing a specific novel/series (e.g., `work-a/`). Contains `series-bible.md` and work-specific `settings/` (local characters, items, overrides).
+3. **Volume Level**: A subdirectory within the active work (e.g., `work-a/volume-1/`). Contains `outline.md` and `drafts/`.
 
-### 1. Shared Universe Franchise Layout (다작품 구조)
+### 1. Shared Universe Franchise Layout
 ```text
-[project-root]/               # === 1단계: 프랜차이즈 레벨 (Franchise) ===
-├── settings/                # 프랜차이즈 공통 설정 (전역 세계관 로어)
+[project-root]/               # === Level 1: Franchise ===
+├── settings/                # Shared franchise lore
 │   ├── magic-system.md
 │   └── characters/
 │       └── legendary-hero.md
 │
-├── [work-a]/                # === 2단계: 작품 레벨 (Work A) ===
-│   ├── series-bible.md      # 작품 A 시리즈 바이블
-│   ├── settings/            # 작품 A 전용 설정 (로컬 캐릭터/아이템)
+├── [work-a]/                # === Level 2: Work A ===
+│   ├── series-bible.md      # Work A series bible
+│   ├── settings/            # Work A local settings
 │   │
-│   ├── volume-1/            # === 3단계: 권 레벨 (Volume 1 of Work A) ===
-│   │   ├── outline.md       # 1권 아웃라인 및 비트
-│   │   ├── drafts/          # 1권 문단/챕터 드래프트
+│   ├── volume-1/            # === Level 3: Volume 1 of Work A ===
+│   │   ├── outline.md       # Volume 1 outline and beats
+│   │   ├── drafts/          # Volume 1 paragraph/chapter drafts
 │   │   ├── epub-src/        # editable EPUB source generated by build
 │   │   └── volume-1.epub    # built EPUB artifact
-│   └── volume-2/            # 3단계: 권 레벨 (Volume 2 of Work A)
+│   └── volume-2/            # Level 3: Volume 2 of Work A
 │
-└── [work-b]/                # === 2단계: 작품 레벨 (Work B) ===
+└── [work-b]/                # === Level 2: Work B ===
     ├── series-bible.md
-    └── volume-1/            # === 3단계: 권 레벨 (Volume 1 of Work B) ===
+    └── volume-1/            # === Level 3: Volume 1 of Work B ===
 ```
 
-### 2. Single Work Franchise Layout (한 작품 프랜차이즈 구조)
+### 2. Single Work Franchise Layout
 Even if there is only one current work, keep the same structure as a multi-work franchise. The project root remains the Franchise level, and the work gets its own subdirectory so more works can be added later without migration:
 ```text
-[project-root]/               # === 1단계: 프랜차이즈 레벨 ===
-├── settings/                # 선택 사항: 나중에 여러 작품이 공유할 전역 설정
+[project-root]/               # === Level 1: Franchise ===
+├── settings/                # Optional shared settings for future works
 │
-└── [first-work]/            # === 2단계: 작품 레벨 ===
+└── [first-work]/            # === Level 2: Work ===
     ├── series-bible.md
     ├── settings/
-    ├── volume-1/            # === 3단계: 권 레벨 ===
+    ├── volume-1/            # === Level 3: Volume ===
     │   ├── outline.md
     │   └── drafts/
     └── volume-2/
@@ -233,9 +234,11 @@ If no style is declared, the default is **elegant, controlled, and assured liter
 
 Each volume's `narrative-state.md` is the continuity ledger for current timeline point, locked-prefix summary, character locations, injuries, inventory, Location / World Canon References, Inventory Canon References, emotional state, relationship deltas, and open hooks. It is updated after each verified beat is consolidated.
 
+Each volume's `writing-session.md` is the restart checkpoint for interrupted work. It records the operation type (`NEW_DRAFT`, `CONTINUATION`, `REVISION`, `SETTING_CHANGE_MIGRATION`, `BUILD`, or `VERIFY_ONLY`), target draft, current unit, next action, last final-PASS beat or span, draft/canon hashes, manifest row, evidence path, narrative-state update, Git commit, and locked context hashes for revisions. Unverified work stays in `.session/current-work.md` until final Otaku PASS.
+
 Each volume's `verification-manifest.md` records each draft exactly once with the template's exact column order, `Draft SHA256`, `Canon Snapshot SHA256`, final Otaku PASS status, Editor Style Drift Audit PASS, Editor Character Voice Audit PASS, ledger update summaries, approved unknowns, and a linked Verification Evidence report. Publisher refuses to create an EPUB unless the manifest schema is intact, every packaged draft exists on disk, matches its recorded `Draft SHA256`, the canon bundle matches its recorded `Canon Snapshot SHA256`, the draft is listed with `Final Otaku Verdict: PASS`, `Style Drift Audit: PASS`, and `Character Voice Audit: PASS`, approved unknowns are either `None` or still tracked in `narrative-state.md` Open Hooks, the linked evidence report repeats the same proof fields, the report marks PASS for continuity, retcon safety, style, prose baseline, and character voice checklist items, Retcon Approval is `None` or points to an approved `retcons/*.md` proposal with user approval evidence and impacted canon proof, its Evidence Anchors table covers every checklist item with safe source paths and evidence phrases that appear verbatim in the referenced files, its Ledger Update Anchors prove each durable ledger fact appears in both the manifest summary and `narrative-state.md`, and the report contains no `FAIL`, `PENDING`, or `UNVERIFIED` verdicts.
 
-Starter scaffolds are included under `templates/` for `style-guide.md`, `character-sheet.md`, `item-sheet.md`, `location-sheet.md`, `world-rule-sheet.md`, `series-bible.md`, `narrative-state.md`, `verification-manifest.md`, `verification-evidence.md`, and `retcon-proposal.md`.
+Starter scaffolds are included under `templates/` for `style-guide.md`, `character-sheet.md`, `item-sheet.md`, `location-sheet.md`, `world-rule-sheet.md`, `series-bible.md`, `narrative-state.md`, `writing-session.md`, `verification-manifest.md`, `verification-evidence.md`, and `retcon-proposal.md`.
 
 Before production writing, run `scripts/validate-production-artifacts.sh [work-path] [volume-path]` or let the router perform the same Artifact Preflight Gate. This blocks placeholder `TBD` fields, blank style contract entries, missing Required Style Anchors, missing Forbidden Style Drift, missing Style Verification Questions, missing POV person, missing tense, missing viewpoint anchor, missing head-hopping rule, artifact table schema drift, missing Series Bible chronology source files, missing Chronology evidence phrases, missing character voice rows, missing character sheets, voice matrix and character sheet mismatches, missing character knowledge boundaries, missing forbidden drift guards, missing active state anchors, active state anchors absent from `narrative-state.md`, active narrative-state characters or Series Bible evolution characters that are not covered by the voice matrix and character sheets, active locations or world-rule hooks without Location / World Canon References, missing location/world setting files, missing location active constraints, missing world rule statements, trackable possessions without Inventory Canon References, missing item setting files, item holder mismatches, missing item limitations, and weak narrative-state ledgers before Writer is allowed to draft.
 
@@ -250,7 +253,7 @@ Before production writing, run `scripts/validate-production-artifacts.sh [work-p
 /novelist This scene's pacing feels slow, please fix it
   → @novelist-editor → @novelist-otaku verify
 
-/novelist 이 장면의 응급실 절차가 현실적으로 맞는지 조사해 줘
+/novelist Research whether the emergency room procedure in this scene is realistic
   → @novelist-researcher
 ```
 
