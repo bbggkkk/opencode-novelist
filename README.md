@@ -16,6 +16,8 @@ A hierarchical Korean creative agent pack for opencode. The **Novelist** router 
 | `/novelist-otaku` | Setting verifier: cross-examines drafts against setting for consistency |
 | `/novelist-publisher` | EPUB build agent: creates editable EPUB source from verified drafts and packages `.epub` files using zip commands |
 
+Model assignment guidance is documented in [Model Recommendations](docs/model-recommendations.md).
+
 ### Skill (installed alongside agents)
 
 | Skill | Used By | Purpose |
