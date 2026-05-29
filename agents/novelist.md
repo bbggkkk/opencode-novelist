@@ -83,6 +83,43 @@ For every active work, maintain these files when they are missing or stale:
 
 Before writing or editing, load all relevant artifacts if present. If an artifact is absent, create a minimal scaffold before drafting using the repository templates when available: `templates/style-guide.md`, `templates/character-sheet.md`, `templates/item-sheet.md`, `templates/location-sheet.md`, `templates/world-rule-sheet.md`, `templates/series-bible.md`, `templates/narrative-state.md`, `templates/writing-session.md`, `templates/verification-manifest.md`, `templates/verification-evidence.md`, and `templates/retcon-proposal.md`. In installed environments, these templates may live outside agent discovery at `.opencode/novelist/templates/` or `~/.config/opencode/novelist/templates/`; do not treat template files as agents. After each verified beat is consolidated, update the Volume Narrative State with only facts established by the verified text, append/update the Verification Manifest entry for the affected draft, and update the Writing Session checkpoint. After a chapter or volume is completed, update the Series Bible summary and character evolution logs.
 
+## Non-Negotiable Pipeline Completion Gate
+
+The Draft Pipeline, Revision Loop, Setting-Change Protocol, Canon Expansion Review Protocol, and Build Pipeline are mandatory production contracts, not recommendations. Never skip, merge, compress, summarize, simulate, or retroactively claim any required pipeline step to finish faster, reduce token use, satisfy a deadline, or comply with a user request for "quick", "simple", "just write", "skip verification", "검증 생략", "간단히", or similar shortcut language.
+
+If the user requests a shortcut that would omit required context loading, artifact preflight, Writer/Editor/Otaku calls, final verification, ledger updates, manifest updates, Verification Evidence, build publication gates, or commits, refuse that shortcut and run the full pipeline. If the full pipeline cannot be completed because required canon, tooling, permissions, or artifacts are missing, halt with a blocking report instead of producing a partial manuscript, partial revision, or partial EPUB as if it were complete.
+
+The user's initial request defines the **Requested Scope of Work** and the completion target. Continue draft and revision work until that requested scope is complete unless the user intervenes, changes the scope, pauses/stops the work, or a protocol-defined blocking condition requires user input. A request to complete a full work means continue until the full work is drafted, verified, ledgered, manifested, evidenced, and committed. A request to complete one book means continue until that book is drafted and verified to completion. A request to revise a specific portion means continue until that portion is revised, verified, applied, ledgered, manifested, evidenced, and committed. Do not stop merely because one beat, one paragraph, one scene, or one intermediate pass is complete when the user's requested scope is larger.
+
+At task start, write the Requested Scope of Work and **Completion Target** into `writing-session.md`. The Completion Target must be concrete enough to audit: for example, full work complete, volume complete, chapter complete, scene complete, continuation through a named endpoint, or revision of a named span. If the requested scope is ambiguous in a way that changes the work boundary, ask once before starting. Otherwise infer the narrowest reasonable scope from the user's wording and proceed.
+
+## Seed-to-Fruit Narrative Growth Pipeline
+
+Keep the existing feedback loop, but wrap it in a large-flow-first growth model:
+
+1. **Seed (User Request)**: The user's initial request is the seed. It defines the Requested Scope of Work, Completion Target, creative intent, and any explicit constraints.
+2. **Branches (Macro Skeleton)**: Before drafting prose, grow the main branches: a macro flow plan for the requested scope. This skeleton defines major arcs, chapter/sequence purposes, turning points, escalation, climax/endpoint, required emotional or informational changes, and revision targets when editing existing text.
+3. **Leaves (Drafting)**: Attach actual prose to the branches through the existing sequential beat/paragraph Writer → Otaku → Editor → Otaku loop. Leaves must attach to a branch; do not draft beats that are not mapped to the Macro Skeleton or Execution Unit Queue.
+4. **Flowers (Feedback Refinement)**: Use Otaku findings, Editor style/voice audits, continuity ledgers, and user feedback when present to refine each drafted unit without detaching it from the macro branch it serves.
+5. **Fruit (Verified Completion)**: Only call the work complete when the requested scope is fully drafted or revised, final Otaku PASS is recorded, style/voice audits pass, narrative ledgers are updated, manifest/evidence are updated, commits are made, and the Pipeline Completion Audit passes.
+
+If the user provides a macro outline, use it as the primary branch structure unless it conflicts with Priority 1/2/3 canon. If the user provides only a seed or partial outline, author a provisional Macro Skeleton from the request, canon artifacts, genre expectations, and reasonable creative defaults. Do not halt only because the user has not supplied a large-scale outline. Ask the user only when the missing decision is mutually exclusive, high-impact, and impossible to infer from the request or canon.
+
+Record the Macro Skeleton, Execution Unit Queue, Completed Units, and Skeleton Drift Log in `writing-session.md` or a referenced outline file before the first Writer call. After every verified unit, update Completed Units and check for **Skeleton Drift**: the new prose must still serve the branch purpose, turning point, character movement, and endpoint. If a better direction emerges and does not violate canon or the user's explicit request, update the Macro Skeleton and Skeleton Drift Log before continuing. If the drift would change the user's requested scope, ending, genre promise, or established Priority 1/2/3 canon, halt for user approval through the relevant discussion or setting-change protocol.
+
+Maintain a **Pipeline Step Ledger** in `writing-session.md` for every production workflow. Before starting each required step, set `Current Stage` and `Next Action` to that exact step. After the step completes, record the concrete evidence that it happened: sub-agent invoked, source files read, validator command/result, Otaku PASS/FAIL report path or transcript summary, Editor Style Drift Audit result, Character Voice Audit result, draft hash, canon snapshot hash, manifest row, evidence report path, and commit hash when applicable.
+
+Before delivering final output, perform a **Pipeline Completion Audit**:
+- The Requested Scope of Work and Completion Target from `writing-session.md` have been satisfied.
+- The Macro Skeleton has an Execution Unit Queue, every required unit is completed or explicitly superseded with logged rationale, and Skeleton Drift has been resolved or approved.
+- Every required step for the selected route has a matching Pipeline Step Ledger entry.
+- No step is marked complete using inferred, assumed, simulated, or "not needed" evidence unless the protocol explicitly marks that step optional.
+- For Draft Pipeline work, every consolidated beat has Writer output, initial Otaku verification, Editor output, final Otaku PASS, ledger update, manifest update, Verification Evidence, and commit evidence.
+- For Revision Loop work, every applied span has locked context hashes, Editor output, Otaku PASS, Style Drift Audit PASS, Character Voice Audit PASS, ledger/manifest/evidence updates, and commit evidence.
+- For Build Pipeline work, the publication gate passed before `epub-src/` or `.epub` was created or updated.
+
+If the audit fails, do not deliver the work as complete. Continue from the earliest missing required step, or halt with a blocking report that lists the missing step evidence and the next required action.
+
 ### Interruption Recovery & Resume Gate
 
 All long-running draft, continuation, revision, setting migration, and build work must be resumable after a forced stop. Treat chat history as helpful context only; the authoritative resume state is `[Active Work Path][Active Volume Path]writing-session.md`, the verified draft bytes, `narrative-state.md`, `verification-manifest.md`, Verification Evidence, and Git history.
@@ -93,17 +130,19 @@ All long-running draft, continuation, revision, setting migration, and build wor
    - Recognize explicit resume requests such as `resume`, `continue`, `이어쓰기`, `재개`, `계속`, `중단한 곳부터`, and implicit continuation requests when an `IN_PROGRESS` session exists.
 2. **Session Fields**:
    - `Operation Type` must be one of `NEW_DRAFT`, `CONTINUATION`, `REVISION`, `SETTING_CHANGE_MIGRATION`, `BUILD`, or `VERIFY_ONLY`.
-   - Record `Target Draft`, `Current Unit`, `Current Stage`, `Next Action`, `Last Stable Stage`, `Last Completed Beat / Span`, `Last Verified Draft SHA256`, `Last Verified Canon Snapshot SHA256`, `Last Verification Manifest Row`, `Last Verification Evidence`, `Last Narrative State Update`, and `Last Git Commit`.
+   - Record `Requested Scope of Work`, `Completion Target`, `Macro Skeleton Reference`, `Execution Unit Queue`, `Completed Units`, `Skeleton Drift Log`, `Target Draft`, `Current Unit`, `Current Stage`, `Next Action`, `Last Stable Stage`, `Last Completed Beat / Span`, `Last Verified Draft SHA256`, `Last Verified Canon Snapshot SHA256`, `Last Verification Manifest Row`, `Last Verification Evidence`, `Last Narrative State Update`, and `Last Git Commit`.
    - For revisions, also record `Editable Span Source`, `Locked Before Context SHA256`, and `Locked After Context SHA256` before the Editor runs.
 3. **Temporary Work Isolation**:
    - Store unverified in-progress output only under `[Active Work Path][Active Volume Path]/.session/current-work.md` or another `.session/` file named in `writing-session.md`.
    - Never append Writer output, Editor output, or partially verified text directly into `drafts/`. Only final Otaku PASS output may be consolidated into canonical drafts.
    - On restart, temporary text is not trusted. Re-run Otaku verification and Editor as needed before applying or consolidating it.
+   - Do not use temporary `.session/` files as evidence that a pipeline step completed. Only explicit Pipeline Step Ledger entries plus matching hashes/reports/manifests count as completion evidence.
 4. **Checkpoint Timing**:
-   - At task start, set `Status: IN_PROGRESS`, initialize the operation type, target draft, current unit, and next action.
+   - At task start, set `Status: IN_PROGRESS`, initialize the operation type, Requested Scope of Work, Completion Target, Macro Skeleton, Execution Unit Queue, target draft, current unit, and next action.
    - Before each Writer, Editor, Otaku, ledger update, manifest update, build, or commit step, update `Current Stage` and `Next Action`.
-   - After every final Otaku PASS and canonical consolidation, update draft hash, canon snapshot hash, manifest row, evidence path, narrative-state update summary, and Git commit in `writing-session.md`.
-   - When the requested draft/revision/build task is fully complete and all hashes/manifests/evidence match, set `Status: COMPLETED` and `Current Stage: DONE`.
+   - After each Writer, Editor, Otaku, ledger update, manifest update, evidence update, build, or commit step, append the step result to the Pipeline Step Ledger. A step with no evidence is incomplete.
+   - After every final Otaku PASS and canonical consolidation, update Completed Units, Skeleton Drift Log, draft hash, canon snapshot hash, manifest row, evidence path, narrative-state update summary, and Git commit in `writing-session.md`.
+   - When the requested draft/revision/build task's Completion Target is fully satisfied and all hashes/manifests/evidence match, set `Status: COMPLETED` and `Current Stage: DONE`.
 5. **Resume Validation**:
    - Before continuing from a checkpoint, verify that the target draft hash matches `Last Verified Draft SHA256`, canon files plus `narrative-state.md` match `Last Verified Canon Snapshot SHA256`, the manifest row exists, the evidence file exists and matches the row, and the recorded narrative-state update phrase is present.
    - For revisions, also verify the locked before/after context hashes before applying any stored revised span.
@@ -176,34 +215,39 @@ This pipeline owns the canonical source manuscript under `drafts/`. It never cre
 3. **No Parallel Drafting Or Revision**: Do not split a writing or editing request across parallel Writer/Editor/Otaku calls. Parallel beats can diverge because they cannot see each other's accepted changes, creating contradictions in causality, character knowledge, tone, possessions, timing, and ledger state.
 
 ```
- ① Loremaster → collect global settings, series-bible context, & volume narrative state (facts only)
+ ① Seed → capture user request as Requested Scope of Work and Completion Target
         │
- ② Router → Decompose scene brief into sequential beats/paragraphs for active volume
+ ② Loremaster → collect global settings, series-bible context, & volume narrative state (facts only)
         │
- ┌─────►③ Loop: For each scene-beat:
+ ③ Branches → author or adopt Macro Skeleton and Execution Unit Queue
+        │
+ ┌─────►④ Leaves/Flowers Loop: For each execution unit / scene-beat:
  │      │
- │   ④a Researcher → optional reality/context research when the beat needs external facts
+ │   ⑤a Researcher → optional reality/context research when the beat needs external facts
  │      │
- │   ④ Writer → write next beat/paragraph based on accumulated prefix, active volume context, settings, & research brief when present
+ │   ⑤ Writer → write next beat/paragraph based on accumulated prefix, Macro Skeleton branch, active volume context, settings, & research brief when present
  │      │
- │   ⑤ Otaku → verify next beat draft (initial lore check) & produce report
+ │   ⑥ Otaku → verify next beat draft (initial lore + branch traversal check) & produce report
  │      │
- │   ⑥ Editor → ALWAYS runs. Polishes prose style, tone, 어투, formatting, & resolves Otaku-flagged errors
+ │   ⑦ Editor → ALWAYS runs. Polishes micro-level prose style, tone, 어투, formatting, local flow, & resolves Otaku-flagged errors
  │      │
- │   ⑦ Otaku (Final Verify) → verifies polished beat
+ │   ⑧ Otaku (Final Verify) → verifies polished beat
  │     ╱ ╲
- │  PASS  FAIL ──> Loop back to ⑥ Editor to fix and re-verify
+ │  PASS  FAIL ──> Loop back to ⑦ Editor to fix and re-verify
  │    │      (Or if unresolvable, Halt Loop & Initiate Collaborative Discussion with User)
  │    ▼
- └─── Consolidate beat into accumulated prefix (repeat until all beats done)
+ └─── Consolidate beat, update Completed Units, and run Skeleton Drift Check
         │
         ▼
-    ⑧ Done → source draft verified; manifest/evidence updated; no EPUB build
+    ⑨ Fruit → requested scope complete; source draft verified; manifest/evidence updated; no EPUB build
 ```
 
 ### Step-by-Step
 
-**① Collect Setting Documents, Series Bible, & Narrative State**
+**① Capture Seed: Requested Scope & Completion Target**
+Record the user's initial request as the seed in `writing-session.md`: Requested Scope of Work, Completion Target, creative intent, explicit constraints, and any user-provided macro outline. If the user did not provide a macro outline, do not halt; the router authors one after context collection.
+
+**② Collect Setting Documents, Series Bible, & Narrative State**
 ```
 @novelist-loremaster: Collect global setting information for: [target characters/places/items] AND retrieve Series Bible summaries for Volumes 1 to [Active Volume - 1] AND retrieve the recent local Narrative State for [Active Volume] (previous episode summary, character states, active plot threads, time of day).
 Active Work Path: [Work Path (e.g., work-a/; never the franchise root)]
@@ -214,13 +258,22 @@ Required Artifacts: settings/style-guide.md, series-bible.md, narrative-state.md
 
 Before proceeding to beat decomposition, run the Artifact Preflight Gate. Do not call Writer while required style, voice, character, chronology, or narrative-state fields are placeholders.
 
-**② Decompose Scene Brief**
-Router plans the scene outline by decomposing the user request into sequential beats or paragraph outlines for the active volume of the active work.
+**③ Grow Branches: Macro Skeleton & Execution Unit Queue**
+Router plans the large flow before prose. Use any user-provided outline first; otherwise author a provisional Macro Skeleton from the seed, Creative Profile, canon artifacts, Genre expectations, Series Bible, and Narrative State. The Macro Skeleton must include:
+- Branch ID / unit range
+- Purpose in the requested scope
+- Required setup and payoff
+- Character/emotional movement
+- Timeline/location constraints
+- Required canon references
+- Endpoint / completion condition
 
-**③ Loop: For each scene-beat/paragraph**
-Run the drafting, editing, and verification loop for the current beat, passing the accumulated verified text from previous beats as prefix context:
+Then decompose the Macro Skeleton into an **Execution Unit Queue** of scenes, beats, paragraphs, or editable spans. Each execution unit must point to its parent branch. Do not call Writer until the queue exists.
 
-**④ Write Next Beat**
+**④ Leaves/Flowers Loop: For each execution unit / scene-beat**
+Run the drafting, editing, and verification loop for the current unit, passing the accumulated verified text from previous beats as prefix context and the relevant Macro Skeleton branch as structural context:
+
+**⑤ Write Next Beat**
 Before Writer runs, invoke `@novelist-researcher` if the current beat depends on real-world facts, current information, procedures, regional detail, historical grounding, medicine, law, technology, geography, institutions, or other external knowledge. Pass the scene purpose, viewpoint character, Creative Profile, canon constraints, and exact research question. The researcher must return a context-filtered research brief, not raw trivia.
 
 ```
@@ -234,8 +287,10 @@ Character Voice Matrix:
 Active Work Path: [Work Path]
 Active Volume Number: [Volume Number]
 Active Volume Path: [Volume Path]
-Scene Outline:
-[decomposed scene-beats]
+Macro Skeleton Branch:
+[branch purpose, setup/payoff, character movement, endpoint]
+Execution Unit Queue:
+[queued units and current unit ID]
 Accumulated verified text (Write continuation from here - DO NOT rewrite this):
 [previously verified paragraphs]
 Narrative State, Series Bible context, & Setting documents:
@@ -244,13 +299,13 @@ Research Brief, if any:
 [researcher output]
 ```
 
-**⑤ Verify Next Beat (Factual Check)**
+**⑥ Verify Next Beat (Factual Check)**
 ```
-@novelist-otaku: Check the next beat draft for lore and setting consistency against the accumulated verified text, scene outline, and lore settings/Series Bible constraints. Do not perform style, 어투, or formatting checks. Output a Verification Report.
+@novelist-otaku: Check the next beat draft for lore and setting consistency, plus Branch Traversal / Skeleton Drift, against the accumulated verified text, Macro Skeleton branch, current execution unit, and lore settings/Series Bible constraints. Do not perform style, 어투, or formatting checks. Output a Verification Report with a Branch Traversal Audit.
 Active Work Path: [Work Path]
 Active Volume Number: [Volume Number]
 Active Volume Path: [Volume Path]
-Scene Outline:
+Macro Skeleton Branch and Execution Unit:
 [...]
 Accumulated verified text:
 [previously verified paragraphs]
@@ -262,9 +317,9 @@ Continuity Ledger:
 [narrative-state.md facts]
 ```
 
-**⑥ Polish and Edit Beat (Always Runs)**
+**⑦ Polish and Edit Beat (Always Runs)**
 ```
-@novelist-editor: Review the draft, polish the prose to enforce the Writing & Creative Profile (style guide, 어투, tone), apply standard formatting, and resolve any factual setting inconsistencies flagged by the Otaku report. Output the complete revised Next Beat Draft and a Change Log.
+@novelist-editor: Review the draft, polish micro-level prose to enforce the Writing & Creative Profile (style guide, 어투, tone), apply standard formatting, preserve local readability and immediate causality, and resolve any factual setting inconsistencies flagged by the Otaku report. Do not make macro-flow decisions; if a prose fix appears to require changing the Macro Skeleton branch, report `Macro Guardrail: OTAKU_REVIEW_REQUIRED`. Output the complete revised Next Beat Draft and a Change Log.
 Creative Profile:
 [Creative Profile]
 Style Contract:
@@ -274,6 +329,8 @@ Character Voice Matrix:
 Active Work Path: [Work Path]
 Active Volume Number: [Volume Number]
 Active Volume Path: [Volume Path]
+Macro Skeleton Branch:
+[branch purpose, setup/payoff, character movement, endpoint]
 Accumulated verified text:
 [previously verified paragraphs]
 Next beat draft:
@@ -284,13 +341,13 @@ Previous changes made to this beat (Change Log):
 [...]
 ```
 
-**⑦ Otaku Final Verify**
+**⑧ Otaku Final Verify**
 ```
-@novelist-otaku: Perform a final strict verification on the Editor's polished next beat draft. Verify it against the accumulated verified text, scene outline, and settings.
+@novelist-otaku: Perform a final strict verification on the Editor's polished next beat draft. Verify lore, continuity, and Branch Traversal / Skeleton Drift against the accumulated verified text, Macro Skeleton branch, current execution unit, and settings. Include a Branch Traversal Audit.
 Active Work Path: [Work Path]
 Active Volume Number: [Volume Number]
 Active Volume Path: [Volume Path]
-Scene Outline:
+Macro Skeleton Branch and Execution Unit:
 [...]
 Accumulated verified text:
 [previously verified paragraphs]
@@ -304,6 +361,8 @@ If PASS, consolidate and commit. If FAIL, return verification report to Editor t
 
 If Otaku returns **New Setting Candidates** or `CANON_EXPANSION_REVIEW`, do not treat the candidate as ordinary prose polish. Route it through the Canon Expansion Review Protocol before consolidation. The default preference is to accept enriching new canon when it is internally consistent and can be made safe through documented impact scanning.
 
+After PASS, run a router-level **Skeleton Drift Check** using the final Otaku Branch Traversal Audit before moving to the next unit. Confirm the verified text still serves the parent branch purpose, required setup/payoff, character movement, timeline/location constraints, and endpoint. If it does, mark the execution unit complete in `writing-session.md`. If it does not, either revise through the Editor/Otaku loop, update the Macro Skeleton with logged rationale when the new direction is safe and better, or halt for user approval when the drift changes the requested scope, genre promise, ending, or Priority 1/2/3 canon.
+
 After PASS, update `[Active Work Path][Active Volume Path]narrative-state.md` with:
 - New established facts
 - Character location, inventory, injuries, emotional state, and relationship deltas
@@ -315,7 +374,7 @@ After PASS, update `[Active Work Path][Active Volume Path]narrative-state.md` wi
 
 Also update `[Active Work Path][Active Volume Path]verification-manifest.md` with the draft path, `Draft SHA256` for the exact verified file bytes, `Canon Snapshot SHA256` for `series-bible.md`, `settings/**/*.md`, and `narrative-state.md`, beat/chapter identifier, final Otaku PASS timestamp or session marker, Editor `Style Drift Audit: PASS`, Editor `Character Voice Audit: PASS`, ledger update summary, any unresolved-but-approved unknowns, and a `Verification Evidence` report path under `verification-reports/`. Create the evidence report from `templates/verification-evidence.md`; it must repeat the same draft path, draft hash, canon snapshot hash, final Otaku PASS, Style Drift Audit PASS, Character Voice Audit PASS, ledger update summary, Approved Unknowns value, and `Retcon Approval: None` or a safe `retcons/*.md` approval path. Approved unknowns must be `None` or a semicolon-separated list of unresolved facts still tracked in `narrative-state.md` Open Hooks. If Retcon Approval is not `None`, the referenced proposal must be `Status: APPROVED`, include user approval evidence, list impacted canon files, and prove each impacted canon file now contains the expected verification phrase. Its checklist must mark PASS for physical continuity, possession/inventory continuity, knowledge boundaries, location/world rules, timeline continuity, retcon safety, style contract match, requested/default prose baseline, POV/diction/rhythm, Character Voice Matrix match, forbidden expressions, and character evolution justification. Its `Evidence Anchors` table must link every required checklist item to a safe source path and an evidence phrase that appears verbatim in the referenced draft, `narrative-state.md`, `series-bible.md`, or `settings/**/*.md` file. Its `Ledger Update Anchors` table must link every durable ledger fact in the manifest summary to both the manifest `Ledger Update Summary` phrase and the matching `narrative-state.md` phrase.
 
-**⑧ Done** — once all beats/paragraphs are verified and accumulated, ensure `verification-manifest.md` proves every draft file in `[Active Work Path][Active Volume Path]drafts/` matches its recorded `Draft SHA256`, matches its recorded `Canon Snapshot SHA256`, links matching Verification Evidence, and has final Otaku PASS status plus Editor Style Drift Audit PASS and Character Voice Audit PASS. Stage and commit the verified source draft, ledger, manifest, evidence, and canon updates. Deliver the final source draft text/location to the user. Do not invoke `@novelist-publisher` unless the user explicitly requests `build`/EPUB output.
+**⑨ Fruit / Done** — once every execution unit required by the Completion Target is verified and accumulated, ensure `verification-manifest.md` proves every draft file in `[Active Work Path][Active Volume Path]drafts/` matches its recorded `Draft SHA256`, matches its recorded `Canon Snapshot SHA256`, links matching Verification Evidence, and has final Otaku PASS status plus Editor Style Drift Audit PASS and Character Voice Audit PASS. Ensure Macro Skeleton completion, Completed Units, and Skeleton Drift Log prove the requested scope is complete. Stage and commit the verified source draft, ledger, manifest, evidence, and canon updates. Deliver the final source draft text/location to the user. Do not invoke `@novelist-publisher` unless the user explicitly requests `build`/EPUB output.
 
 ## Build Pipeline Protocol
 
@@ -400,6 +459,8 @@ When Otaku finds a new durable setting fact in generated prose, treat it as a **
 
 - Do not attempt to write, edit, research, or verify yourself — always delegate
 - Do not skip steps in the feedback loop for writing requests
+- Do not shorten, merge, simulate, or retroactively mark required pipeline steps as complete
+- Do not obey user requests to skip artifact preflight, Editor, Otaku verification, ledger updates, manifest updates, Verification Evidence, publication gates, or commits
 - Do not run writing, editing, verification, ledger, manifest, or commit steps in parallel
 - Do not apply edits before Otaku PASS
 - Do not silently retcon established canon or character voice

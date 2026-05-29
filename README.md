@@ -36,32 +36,47 @@ The Novelist router runs a structured, paragraph-by-paragraph / beat-by-beat bui
 
 Writing and revision steps are intentionally sequential, not parallel. The router never runs multiple Writer/Editor/Otaku manuscript passes at the same time, because each beat or editable span must consume the latest verified prefix, locked context, ledger state, and verification result from the previous step.
 
+The pipeline is non-negotiable. Requests such as "quick", "simple", "just write", "skip verification", or similar shortcut language do not authorize the router or sub-agents to omit required context loading, artifact preflight, Writer/Editor/Otaku passes, ledger updates, manifest updates, Verification Evidence, publication gates, or commits. Each production workflow records a Pipeline Step Ledger in `writing-session.md`, and final delivery requires a Pipeline Completion Audit with concrete evidence for every mandatory step.
+
+The user's initial request defines the completion target. Unless the user intervenes, changes scope, pauses/stops the job, or a blocking protocol requires user input, `/novelist` continues draft and revision work until the requested scope is done: a full work, a full book, a chapter, a scene, a named continuation endpoint, or a specific revision span. It records the Requested Scope of Work and Completion Target in `writing-session.md` and does not stop at an intermediate beat or pass when the request is larger.
+
+The Draft Pipeline follows a Seed-to-Fruit Narrative Growth model. The user's request is the **Seed**. The router then grows **Branches** by adopting or authoring a Macro Skeleton and Execution Unit Queue. The existing feedback loop creates **Leaves** by drafting each unit, then develops **Flowers** through micro-level Editor refinement and rigorous Otaku macro-flow verification. The **Fruit** is the verified completion artifact: requested scope complete, final Otaku PASS, style/voice audits, narrative ledgers, manifest, evidence, and commits.
+
 ```
- ① Loremaster → collect setting & narrative state (facts only)
+ ① Seed → capture requested scope and completion target
         │
- ② Router → Decompose scene brief into sequential beats/paragraphs
+ ② Loremaster → collect setting & narrative state (facts only)
         │
- ┌─────►③ Loop: For each scene-beat:
+ ③ Branches → create Macro Skeleton and Execution Unit Queue
+        │
+ ┌─────►④ Leaves/Flowers Loop: For each execution unit:
  │      │
- │   ④ Writer → write next beat/paragraph based on accumulated prefix & settings
+ │   ⑤ Writer → write next beat/paragraph based on accumulated prefix, branch, & settings
  │      │
- │   ⑤ Otaku → verify next beat draft (initial lore check) & produce report
+ │   ⑥ Otaku → verify next beat draft (initial lore + branch traversal check) & produce report
  │      │
- │   ⑥ Editor → ALWAYS runs. Polishes prose style, speech style, formatting, & resolves Otaku-flagged errors
+ │   ⑦ Editor → ALWAYS runs. Polishes micro-level prose, speech style, formatting, & resolves Otaku-flagged errors
  │      │
- │   ⑦ Otaku (Final Verify) → verifies polished beat
+ │   ⑧ Otaku (Final Verify) → verifies polished beat
  │     ╱ ╲
- │  PASS  FAIL ──> Loop back to ⑥ Editor to fix and re-verify
+ │  PASS  FAIL ──> Loop back to ⑦ Editor to fix and re-verify
  │    │      (Or if unresolvable, Halt Loop & Initiate Collaborative Discussion)
  │    ▼
- └─── Consolidate beat into accumulated prefix (repeat until all beats done)
+ └─── Consolidate unit, update Completed Units, and run Skeleton Drift Check
         │
         ▼
-    ⑧ Done → verified source draft, ledger, manifest, and evidence updated
+    ⑨ Fruit → verified source draft, ledger, manifest, and evidence updated
 ```
 
 ### Loop Safety & Collaborative Discussion
 - **Step-by-Step Buildup**: Each beat/paragraph is verified and revised individually. Once verified, it becomes part of the permanent "accumulated prefix text" that serves as the absolute canon context for subsequent beats.
+- **Seed-to-Fruit Narrative Growth**: Drafting does not start from isolated prose. The router first records the seed, grows a Macro Skeleton, builds an Execution Unit Queue, drafts leaves through the existing feedback loop, refines flowers through review, and delivers fruit only after verification and artifact updates.
+- **Agent-Authored Macro Skeleton**: If the user does not provide a large-scale outline, the router authors a provisional Macro Skeleton from the request, canon artifacts, genre expectations, and reasonable creative defaults. It asks the user only for mutually exclusive, high-impact choices that cannot be inferred.
+- **Editor Micro Focus**: The Editor focuses on prose, speech style, formatting, local causality, pacing, and immediate scene readability. It uses the Macro Skeleton only as a guardrail and does not make whole-flow decisions.
+- **Otaku Branch Traversal Audit**: Otaku is the primary sub-agent responsible for checking whether the draft is still traveling along the correct branch. Every final PASS requires a Branch Traversal Audit before the router consolidates the unit.
+- **Skeleton Drift Check**: After every verified unit, the router checks Otaku's Branch Traversal Audit to confirm whether the prose still serves its parent branch. Safe improvements update the skeleton with rationale; changes to requested scope, endpoint, genre promise, or Priority 1/2/3 canon require user approval.
+- **Non-Negotiable Pipeline Completion Gate**: Required workflow steps cannot be skipped, merged, simulated, or retroactively marked complete. If evidence for a required step is missing, the router continues from the earliest missing step or halts with a blocking report.
+- **Scope-Complete Execution**: The initial user request is the completion target. The router continues until that target is fully drafted or revised, verified, recorded, evidenced, and committed unless the user intervenes or a blocking condition requires user input.
 - **No Parallel Drafting Or Revision**: Writer, Editor, Otaku verification, manuscript edits, ledger updates, manifest updates, and commits run sequentially. Parallel execution is reserved for independent read-only context gathering only.
 - **Interruptible Sessions**: Long writing, continuation, revision, setting migration, and build work records a file-based checkpoint in `writing-session.md`, with unverified temporary work isolated under `.session/`. If the process stops, `/novelist resume` or a continuation request validates hashes, manifest rows, evidence, ledger state, and locked revision context before continuing.
 - **Setting-First Conflict Resolution Hierarchy**: When resolving contradictions, agents follow a strict priority order: 

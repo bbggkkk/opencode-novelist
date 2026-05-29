@@ -5,6 +5,10 @@
 - Session ID: TBD
 - Status: IDLE
 - Operation Type: TBD
+- Requested Scope of Work: TBD
+- Completion Target: TBD
+- Seed Summary: TBD
+- Macro Skeleton Reference: TBD
 - Active Work Path: TBD
 - Active Volume Path: TBD
 - Target Draft: TBD
@@ -25,6 +29,7 @@
 
 ## Current Unit
 
+- Current Branch ID: TBD
 - Unit Type: TBD
 - Unit ID: TBD
 - Scene / Chapter Outline Reference: TBD
@@ -35,6 +40,24 @@
 - Temporary Work File: `.session/current-work.md`
 - Current Stage: IDLE
 - Next Action: TBD
+
+## Macro Skeleton
+
+| Branch ID | Purpose | Required Setup | Required Payoff | Character / Emotional Movement | Constraints | Endpoint |
+|-----------|---------|----------------|-----------------|--------------------------------|-------------|----------|
+| TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+
+## Execution Unit Queue
+
+| Unit ID | Parent Branch | Unit Type | Required Outcome | Status | Evidence |
+|---------|---------------|-----------|------------------|--------|----------|
+| TBD | TBD | TBD | TBD | TBD | TBD |
+
+## Skeleton Drift Log
+
+| Unit ID | Drift Check Result | Decision | Rationale / Approval Evidence |
+|---------|--------------------|----------|-------------------------------|
+| TBD | TBD | TBD | TBD |
 
 ## Pending Verification
 
@@ -47,8 +70,23 @@
 - Ledger Update Pending: NONE
 - Manifest Update Pending: NONE
 
+## Pipeline Step Ledger
+
+| Step ID | Required Step | Current Unit / Span | Status | Evidence |
+|---------|---------------|---------------------|--------|----------|
+| TBD | TBD | TBD | TBD | TBD |
+
+Completion rule: every mandatory step for the active route must have concrete evidence before `Status` can be set to `COMPLETED`. Do not mark steps complete from assumptions, simulations, summaries, or user requests to skip verification. Evidence can include invoked sub-agent name, source files read, validator command/result, Otaku report, Editor audit result, draft hash, canon snapshot hash, manifest row, Verification Evidence path, and commit hash.
+
+Scope rule: `Status` cannot be set to `COMPLETED` until the Requested Scope of Work and Completion Target are satisfied. Do not stop at a beat, paragraph, scene, chapter, or intermediate revision pass when the user's initial request requires a larger unit such as a full section, full book, or full work.
+
+Growth rule: do not start leaf drafting until the Macro Skeleton and Execution Unit Queue exist. Every drafted unit must map to a Parent Branch, and every completed unit must have a Skeleton Drift Log entry proving it still serves the branch or that an approved/safe skeleton update was recorded.
+
 ## Resume Checklist
 
+- [ ] Confirm Requested Scope of Work and Completion Target are recorded.
+- [ ] Confirm Macro Skeleton and Execution Unit Queue exist before drafting.
+- [ ] Confirm each completed unit has a Skeleton Drift Log entry.
 - [ ] Confirm target draft exists or is intentionally new.
 - [ ] Confirm target draft hash matches Last Verified Draft SHA256, unless Last Stable Stage is NONE.
 - [ ] Confirm canon snapshot hash matches Last Verified Canon Snapshot SHA256, unless Last Stable Stage is NONE.
