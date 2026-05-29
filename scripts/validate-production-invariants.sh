@@ -51,6 +51,7 @@ require_file examples/sample-work/volume-1/verification-reports/chapter-01.md
 require_file examples/sample-work/volume-1/writing-session.md
 require_file docs/production-readiness-audit.md
 require_file docs/model-recommendations.md
+require_file docs/model-recommendations.ko.md
 require_file scripts/validate-continuity-scenario.sh
 require_file scripts/validate-style-character-drift-scenario.sh
 require_file scripts/validate-sample-work.sh
@@ -113,7 +114,7 @@ require_text README.md "Editor Micro Focus" "readme editor micro focus"
 require_text README.md "Otaku Branch Traversal Audit" "readme otaku branch traversal audit"
 require_text README.md "Skeleton Drift Check" "readme skeleton drift check"
 require_text README.ko.md "집필과 수정 단계는 의도적으로 순차 실행하며 병렬 실행하지 않습니다" "korean readme no parallel writing/revision"
-require_text README.ko.md "Model Recommendations" "Korean README model recommendations link"
+require_text README.ko.md "model-recommendations.ko.md" "Korean README model recommendations link"
 require_text README.ko.md "파이프라인은 협상 대상이 아닙니다" "korean readme non-negotiable pipeline gate"
 require_text README.ko.md "파이프라인 완료 감사" "korean readme pipeline completion audit"
 require_text README.ko.md "사용자의 최초 요청이 완료 목표를 정의합니다" "korean readme initial request completion target"
@@ -125,6 +126,7 @@ require_text README.ko.md "설정 검증가 가지 진행 감사" "korean readme
 require_text README.ko.md "Skeleton Drift Check" "korean readme skeleton drift check"
 require_text docs/agent-design.md "Drafting and revision are strictly sequential" "design no parallel drafting/revision"
 require_text docs/agent-design.md "Model Recommendations" "design model recommendations link"
+require_text docs/agent-design.md "model-recommendations.ko.md" "design Korean model recommendations link"
 require_text docs/agent-design.md "The pipeline is treated as a mandatory production contract" "design mandatory pipeline contract"
 require_text docs/agent-design.md "Non-Negotiable Pipeline Completion Gate" "design non-negotiable pipeline gate"
 require_text docs/agent-design.md "The initial user request defines the completion target" "design initial request completion target"
@@ -870,6 +872,17 @@ require_text docs/model-recommendations.md "novelist-writer" "model recommendati
 require_text docs/model-recommendations.md "novelist-editor" "model recommendations editor section"
 require_text docs/model-recommendations.md "novelist-otaku" "model recommendations otaku section"
 require_text docs/model-recommendations.md "Practical Assignment Matrix" "model recommendations assignment matrix"
+require_text docs/model-recommendations.md "Korean version" "model recommendations Korean version link"
+require_text docs/model-recommendations.ko.md "일반 선택 원칙" "Korean model recommendations general policy heading"
+require_text docs/model-recommendations.ko.md "아키텍처 이름보다 역할 적합성을 우선합니다" "Korean model recommendations general policy"
+require_text docs/model-recommendations.ko.md "deepseek v4 flash" "Korean model recommendations deepseek example"
+require_text docs/model-recommendations.ko.md "gemma 4 31b" "Korean model recommendations gemma example"
+require_text docs/model-recommendations.ko.md "novelist-writer" "Korean model recommendations writer section"
+require_text docs/model-recommendations.ko.md "novelist-editor" "Korean model recommendations editor section"
+require_text docs/model-recommendations.ko.md "novelist-otaku" "Korean model recommendations otaku section"
+require_text docs/model-recommendations.ko.md "실전 배정표" "Korean model recommendations assignment matrix"
+require_text docs/model-recommendations.ko.md "세부 요구사항:" "Korean model recommendations detailed requirements"
+require_text docs/model-recommendations.ko.md "추천 모델 프로필:" "Korean model recommendations model profile"
 require_text docs/agent-design.md "windows-latest" "design Windows CI documentation"
 
 reject_text "Done & Publish|완료 및 출판|Full loop & publishing|compile final consolidated draft into EPUB|EPUB book compiler|epub_temp|rm -rf epub_temp|Always run the full loop, compile" "deprecated coupled draft/build pipeline wording remains"

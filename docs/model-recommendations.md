@@ -2,6 +2,8 @@
 
 This guide describes recommended model capabilities for each Novelist agent. Treat the named models as examples, not hard requirements. Model names, provider offerings, and serving quality change over time; the stable recommendation is the capability profile for each role.
 
+Korean version: [model-recommendations.ko.md](model-recommendations.ko.md)
+
 ## General Selection Policy
 
 Prefer role-fit over architecture labels. "Dense" and "MoE" can be useful shorthand, but providers do not always publish architecture details and runtime behavior matters more than labels.

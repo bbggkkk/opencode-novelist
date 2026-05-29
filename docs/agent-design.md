@@ -14,7 +14,7 @@ Novelist (Router) — draft/build pipeline router
 └── novelist-publisher — EPUB build pipeline (editable source + zip package)
 ```
 
-Recommended model capability tiers for each role are documented in [Model Recommendations](model-recommendations.md). The guide uses `gemma 4 31b` for creative prose/editing examples and `deepseek v4 flash` for routing, verification, retrieval, research, and publishing examples.
+Recommended model capability tiers for each role are documented in [Model Recommendations](model-recommendations.md). A Korean version is available at [model-recommendations.ko.md](model-recommendations.ko.md). The guide uses `gemma 4 31b` for creative prose/editing examples and `deepseek v4 flash` for routing, verification, retrieval, research, and publishing examples.
 
 ## Draft And Build Pipelines
 

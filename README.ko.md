@@ -16,7 +16,7 @@ opencode를 위한 계층형 한국어 창작 에이전트 팩입니다. **Novel
 | `/novelist-otaku` | 설정 검증가: 집필된 초고가 기설정된 세계관 및 설정 가이드와 일치하는지 철저히 대조합니다. |
 | `/novelist-publisher` | EPUB 빌드 에이전트: 검증이 끝난 초고를 수정 가능한 EPUB 원본으로 만들고, 시스템 zip 명령어로 `.epub` 파일을 빌드합니다. |
 
-모델 배정 가이드는 [Model Recommendations](docs/model-recommendations.md)에 정리되어 있습니다.
+모델 배정 가이드는 [모델 추천 가이드](docs/model-recommendations.ko.md)에 정리되어 있습니다.
 
 ### 스킬
 
