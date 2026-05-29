@@ -32,6 +32,7 @@ jobs:
           $requiredAgents = @(
             "novelist.md",
             "novelist-writer.md",
+            "novelist-designer.md",
             "novelist-editor.md",
             "novelist-researcher.md",
             "novelist-loremaster.md",

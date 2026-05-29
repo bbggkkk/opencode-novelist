@@ -8,7 +8,7 @@ Korean version: [model-recommendations.ko.md](model-recommendations.ko.md)
 
 Prefer role-fit over architecture labels. "Dense" and "MoE" can be useful shorthand, but providers do not always publish architecture details and runtime behavior matters more than labels.
 
-- Writer and Editor should prefer high-quality dense or dense-like creative models. Stable prose rhythm, voice consistency, and stylistic control matter more than maximal tool use.
+- Writer, Designer, and Editor should prefer high-quality dense or dense-like creative/editorial models. Stable prose rhythm, concrete creative development, voice consistency, and stylistic control matter more than maximal tool use.
 - Router, Otaku, Loremaster, Researcher, and Publisher should prefer large reasoning-capable models with strong long-context reliability. MoE models are acceptable when they are strong at exhaustive verification, retrieval, structured reasoning, and tool use.
 - When in doubt, assign the strongest reasoning model to `novelist-otaku` and `novelist`, then choose the best prose model for `novelist-writer`.
 
@@ -18,7 +18,7 @@ The following example set reflects the current tested preference:
 
 | Role Group | Example Model |
 |------------|---------------|
-| Creative prose and micro editing | `gemma 4 31b` |
+| Creative prose, development editing, and micro editing | `gemma 4 31b` |
 | Routing, verification, retrieval, research, publishing | `deepseek v4 flash` |
 
 Use this as a starting point. If local benchmarks show a different model is better at Korean prose, long-context verification, or XML/file generation, prefer the benchmark result.
@@ -56,6 +56,25 @@ Recommended model profile:
 - High-quality dense or dense-like creative model.
 - Medium-to-large context window.
 - Higher creativity tolerance than verification agents.
+
+Example model:
+- `gemma 4 31b`
+
+## `novelist-designer`
+
+The designer is a development editor for pre-draft design. It turns large ideas into concrete character, worldbuilding, and plot constraints before prose drafting.
+
+Detailed requirements:
+- Strong creative development judgment for character desire, wound, contradiction, behavior, voice anchors, and relationship reactions.
+- Ability to turn worldbuilding ideas into usable rules, limits, institutions, costs, social consequences, and scene-visible hooks.
+- Ability to shape plot branches, setup/payoff chains, escalation, and genre promises without drafting manuscript prose.
+- Good Korean cultural and genre intuition.
+- Clear separation between provisional design, confirmed canon, Writer constraints, Editor guardrails, and Otaku review targets.
+
+Recommended model profile:
+- High-quality dense or dense-like creative/editorial model.
+- Strong at concrete elaboration and structured design output.
+- Similar tier to Writer and Editor; does not need the strongest global verification model.
 
 Example model:
 - `gemma 4 31b`
@@ -157,9 +176,9 @@ Example model:
 |-------|--------------|-----------------------------|---------|
 | `novelist` | Routing, scope, pipeline enforcement | Large reasoning / long-context | `deepseek v4 flash` |
 | `novelist-writer` | Creative Korean prose | Dense or dense-like creative | `gemma 4 31b` |
+| `novelist-designer` | Character, world, and plot development | Dense or dense-like creative/editorial | `gemma 4 31b` |
 | `novelist-editor` | Micro editing and style control | Dense or dense-like editorial | `gemma 4 31b` |
 | `novelist-otaku` | Exhaustive canon and branch verification | Strongest reasoning / long-context | `deepseek v4 flash` |
 | `novelist-loremaster` | Canon retrieval and synthesis | Reasoning / retrieval / long-context | `deepseek v4 flash` |
 | `novelist-researcher` | Factual research and source synthesis | Reasoning / research-capable | `deepseek v4 flash` |
 | `novelist-publisher` | EPUB source and packaging | Reasoning / structured output / code | `deepseek v4 flash` |
-

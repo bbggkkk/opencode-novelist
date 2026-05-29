@@ -10,6 +10,7 @@ A hierarchical Korean creative agent pack for opencode. The **Novelist** router 
 |-------|------|
 | `/novelist` | **Router** — routes draft work and EPUB build work into separate pipelines |
 | `/novelist-writer` | Fiction writing: scenes, dialogue, plot, character emotion, episode drafts |
+| `/novelist-designer` | Development editing: concretizes character, worldbuilding, and plot design before drafting |
 | `/novelist-editor` | Fiction editing: plot logic, character consistency, prose rhythm, pacing |
 | `/novelist-researcher` | Fiction-context research: checks real-world plausibility and gathers external facts through the current story context |
 | `/novelist-loremaster` | Setting archivist: searches files for setting info, compiles structured documents |
@@ -42,16 +43,18 @@ The pipeline is non-negotiable. Requests such as "quick", "simple", "just write"
 
 The user's initial request defines the completion target. Unless the user intervenes, changes scope, pauses/stops the job, or a blocking protocol requires user input, `/novelist` continues draft and revision work until the requested scope is done: a full work, a full book, a chapter, a scene, a named continuation endpoint, or a specific revision span. It records the Requested Scope of Work and Completion Target in `writing-session.md` and does not stop at an intermediate beat or pass when the request is larger.
 
-The Draft Pipeline follows a Seed-to-Fruit Narrative Growth model. The user's request is the **Seed**. The router then grows **Branches** by adopting or authoring a Macro Skeleton, Length Budget, and Execution Unit Queue. The existing feedback loop creates **Leaves** by drafting each unit to its target/minimum character budget, then develops **Flowers** through micro-level Editor refinement and rigorous Otaku macro-flow and length verification. The **Fruit** is the verified completion artifact: requested scope complete, promised length satisfied, final Otaku PASS, style/voice audits, narrative ledgers, manifest, evidence, and commits.
+The Draft Pipeline follows a Seed-to-Fruit Narrative Growth model. The user's request is the **Seed**. When the seed is abstract, the Designer first turns macro ideas into concrete character, world, and plot design. The router then grows **Branches** by adopting or authoring a Macro Skeleton, Length Budget, and Execution Unit Queue. The existing feedback loop creates **Leaves** by drafting each unit to its target/minimum character budget, then develops **Flowers** through micro-level Editor refinement and rigorous Otaku macro-flow and length verification. The **Fruit** is the verified completion artifact: requested scope complete, promised length satisfied, final Otaku PASS, style/voice audits, narrative ledgers, manifest, evidence, and commits.
 
 ```
  ① Seed → capture requested scope and completion target
         │
  ② Loremaster → collect setting & narrative state (facts only)
         │
- ③ Branches → create Macro Skeleton, Length Budget, and Execution Unit Queue
+ ③ Designer → concretize character/world/plot design when needed
         │
- ┌─────►④ Leaves/Flowers Loop: For each execution unit:
+ ④ Branches → create Macro Skeleton, Length Budget, and Execution Unit Queue
+        │
+ ┌─────►⑤ Leaves/Flowers Loop: For each execution unit:
  │      │
  │   ⑤ Writer → write next beat/paragraph based on accumulated prefix, branch, & settings
  │      │
@@ -72,8 +75,9 @@ The Draft Pipeline follows a Seed-to-Fruit Narrative Growth model. The user's re
 
 ### Loop Safety & Collaborative Discussion
 - **Step-by-Step Buildup**: Each beat/paragraph is verified and revised individually. Once verified, it becomes part of the permanent "accumulated prefix text" that serves as the absolute canon context for subsequent beats.
-- **Seed-to-Fruit Narrative Growth**: Drafting does not start from isolated prose. The router first records the seed, grows a Macro Skeleton with a Length Budget, builds an Execution Unit Queue, drafts leaves through the existing feedback loop, refines flowers through review, and delivers fruit only after verification and artifact updates.
+- **Seed-to-Fruit Narrative Growth**: Drafting does not start from isolated prose. The router first records the seed, uses Designer when abstract ideas need concrete character/world/plot development, grows a Macro Skeleton with a Length Budget, builds an Execution Unit Queue, drafts leaves through the existing feedback loop, refines flowers through review, and delivers fruit only after verification and artifact updates.
 - **Agent-Authored Macro Skeleton**: If the user does not provide a large-scale outline, the router authors a provisional Macro Skeleton from the request, canon artifacts, genre expectations, and reasonable creative defaults. It asks the user only for mutually exclusive, high-impact choices that cannot be inferred.
+- **Designer Development Pass**: Designer turns broad ideas into write-ready design constraints before prose. Its output is provisional until router recording and Otaku consistency review; it does not replace Editor micro-polish or Otaku verification.
 - **Length Budget**: Branches and execution units carry target/minimum character counts from the start. The router counts actual characters from canonical draft files after consolidation, and no unit, branch, chapter, volume, or work is complete while it is `UNDER_LENGTH`.
 - **Editor Micro Focus**: The Editor focuses on prose, speech style, formatting, local causality, pacing, and immediate scene readability. It uses the Macro Skeleton only as a guardrail and does not make whole-flow decisions.
 - **Otaku Branch Traversal Audit**: Otaku is the primary sub-agent responsible for checking whether the draft is still traveling along the correct branch. Every final PASS requires a Branch Traversal Audit before the router consolidates the unit.
@@ -279,12 +283,13 @@ Before production writing, run `scripts/validate-production-artifacts.sh [work-p
 
 ```text
 /novelist-writer Write an urban fantasy Chapter 3 opening scene.
+/novelist-designer Develop this protagonist and magic academy setting into write-ready design.
 /novelist-editor Review this chapter for plot and character consistency.
 /novelist-loremaster Collect all setting info about the main character.
 /novelist-otaku Verify this draft against the established setting.
 ```
 
-Direct `novelist-writer` and `novelist-editor` calls are provisional only. They must label their output `UNVERIFIED DRAFT` or `UNVERIFIED REVISION`, and the result is not canon, publishable, or safe to apply until the router runs final `@novelist-otaku` verification and records the PASS in `verification-manifest.md`.
+Direct `novelist-writer`, `novelist-designer`, and `novelist-editor` calls are provisional only. They must label their output `UNVERIFIED DRAFT`, `DESIGN DRAFT`, or `UNVERIFIED REVISION`, and the result is not canon, publishable, or safe to apply until the router records it, runs final `@novelist-otaku` verification where required, and records the PASS in `verification-manifest.md`.
 
 ## Language, Culture & Creative Profiling Policy
 

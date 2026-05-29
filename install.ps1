@@ -166,7 +166,7 @@ if (Test-Path $LegacySkillTarget) {
 }
 
 $Agents = @(
-    "novelist", "novelist-writer", "novelist-editor", "novelist-researcher",
+    "novelist", "novelist-writer", "novelist-designer", "novelist-editor", "novelist-researcher",
     "novelist-loremaster", "novelist-otaku", "novelist-publisher"
 )
 
@@ -217,6 +217,7 @@ Write-Host ""
 Write-Host "  [Novelist System]"
 Write-Host "   /novelist               - Router (feedback loop orchestrator)"
 Write-Host "   /novelist-writer        - Fiction writer"
+Write-Host "   /novelist-designer      - Character/world/plot development editor"
 Write-Host "   /novelist-editor        - Fiction editor"
 Write-Host "   /novelist-researcher    - Fiction-context reality research"
 Write-Host "   /novelist-loremaster    - Setting archivist"

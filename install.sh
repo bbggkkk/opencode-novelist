@@ -182,7 +182,7 @@ if [ "$RUNNING_FROM_REPO" = "true" ] && [ -d "$SCRIPT_DIR/agents" ]; then
     fi
 else
     # Download from GitHub
-    for agent in novelist novelist-writer novelist-editor novelist-researcher novelist-loremaster novelist-otaku novelist-publisher; do
+    for agent in novelist novelist-writer novelist-designer novelist-editor novelist-researcher novelist-loremaster novelist-otaku novelist-publisher; do
         curl -sSL "$REPO_URL/agents/${agent}.md" -o "$TARGET/${agent}.md"
     done
     # Download supporting skill outside agent discovery
@@ -206,6 +206,7 @@ echo ""
 echo "  [Novelist System]"
 echo "   /novelist               - Router (feedback loop orchestrator)"
 echo "   /novelist-writer        - Fiction writer"
+echo "   /novelist-designer      - Character/world/plot development editor"
 echo "   /novelist-editor        - Fiction editor"
 echo "   /novelist-researcher    - Fiction-context reality research"
 echo "   /novelist-loremaster    - Setting archivist"
